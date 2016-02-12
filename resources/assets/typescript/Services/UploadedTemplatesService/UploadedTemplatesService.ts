@@ -2,6 +2,9 @@ import { Component, Injectable } from 'angular2/core';
 import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate';
 
 @Injectable()
+@Component({
+    'providers': [UploadedTemplate]
+})
 export class UploadedTemplatesService {
     private uploadedTemplates: UploadedTemplate[];
 
