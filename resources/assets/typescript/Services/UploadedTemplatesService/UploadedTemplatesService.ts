@@ -6,11 +6,9 @@ import { UploadedTemplate } from '../../Models/UploadedTemplate/UploadedTemplate
     'providers': [UploadedTemplate]
 })
 export class UploadedTemplatesService {
-    private uploadedTemplates: UploadedTemplate[];
+    private uploadedTemplates: UploadedTemplate[] = [];
 
-    constructor (uploadedTemplates: UploadedTemplate[]) {
-        this.uploadedTemplates = uploadedTemplates;
-    }
+    constructor () {}
 
     public addTemplate (template: UploadedTemplate): void {
         this.uploadedTemplates.push(template);

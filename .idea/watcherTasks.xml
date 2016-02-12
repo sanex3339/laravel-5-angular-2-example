@@ -21,7 +21,7 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="/usr/bin/tsc" />
-      <option name="scopeName" value="Favorite 'LaravelTypescriptScope'" />
+      <option name="scopeName" value="Favorite 'Scripts'" />
       <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$FileDir$" />
       <envs />

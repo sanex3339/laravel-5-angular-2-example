@@ -20,8 +20,8 @@ System.register(['angular2/core', '../../Models/UploadedTemplate/UploadedTemplat
             }],
         execute: function() {
             UploadedTemplatesService = (function () {
-                function UploadedTemplatesService(uploadedTemplates) {
-                    this.uploadedTemplates = uploadedTemplates;
+                function UploadedTemplatesService() {
+                    this.uploadedTemplates = [];
                 }
                 UploadedTemplatesService.prototype.addTemplate = function (template) {
                     this.uploadedTemplates.push(template);
@@ -34,7 +34,7 @@ System.register(['angular2/core', '../../Models/UploadedTemplate/UploadedTemplat
                     core_1.Component({
                         'providers': [UploadedTemplate_1.UploadedTemplate]
                     }), 
-                    __metadata('design:paramtypes', [Array])
+                    __metadata('design:paramtypes', [])
                 ], UploadedTemplatesService);
                 return UploadedTemplatesService;
             })();
