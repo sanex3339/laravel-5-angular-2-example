@@ -1,0 +1,91 @@
+{
+  "name": "bootstrap-less",
+  "version": "3.3.8",
+  "description": "less files for bootstrap",
+  "keywords": [
+    "bootstrap",
+    "less"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:distros/bootstrap-less.git"
+  },
+  "bugs": {
+    "url": "https://github.com/distros/bootstrap-less/issues"
+  },
+  "main": "js/bootstrap",
+  "format": "global",
+  "shim": {
+    "js/bootstrap": [
+      "jquery"
+    ],
+    "js/bootstrap.min": [
+      "jquery"
+    ],
+    "js/affix": [
+      "jquery"
+    ],
+    "js/alert": [
+      "jquery"
+    ],
+    "js/button": [
+      "jquery"
+    ],
+    "js/carousel": [
+      "jquery"
+    ],
+    "js/collapse": [
+      "jquery"
+    ],
+    "js/dropdown": [
+      "jquery"
+    ],
+    "js/modal": [
+      "jquery"
+    ],
+    "js/popover": [
+      "jquery"
+    ],
+    "js/scrollspy": [
+      "jquery"
+    ],
+    "js/tab": [
+      "jquery"
+    ],
+    "js/tooltip": [
+      "jquery"
+    ],
+    "js/transition": [
+      "jquery"
+    ]
+  },
+  "jspm": {
+    "dependencies": {
+      "jquery": "github:components/jquery"
+    }
+  },
+  "gitHead": "29e45184a4b0b4c4ab6d16e0e6647996d4a7dbeb",
+  "homepage": "https://github.com/distros/bootstrap-less",
+  "_id": "bootstrap-less@3.3.8",
+  "scripts": {},
+  "_shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
+  "_from": "bootstrap-less@>=3.0.0 <4.0.0",
+  "_npmVersion": "2.7.4",
+  "_nodeVersion": "0.12.2",
+  "_npmUser": {
+    "name": "aaike",
+    "email": "aaikevr@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "aaike",
+      "email": "aaikevr@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
+    "tarball": "http://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
+}
