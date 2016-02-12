@@ -21,7 +21,7 @@ export class RedirectService {
      * @param delay
      * @returns {Promise<T>}
      */
-    public redirect (link: string, delay: number) {
+    public redirect (link: string, delay: number = 800) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.router.navigate([link]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BannersCreator;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Redirect;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AngularTemplatesController extends Controller
@@ -22,5 +23,10 @@ class AngularTemplatesController extends Controller
         }
 
         throw new NotFoundHttpException();
+    }
+
+    public function editTemplates()
+    {
+        return Redirect::home();
     }
 }

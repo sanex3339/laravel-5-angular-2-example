@@ -11,9 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('backend.content');
-});
+Route::get('/', [
+    function () {
+        return view('backend.content');
+    },
+    'as' => 'home'
+]);
 
 // angular 2 templates route
 Route::get('/templates/{template}', [
@@ -26,6 +29,11 @@ Route::post('/api/upload-file', [
     'uses' => 'BannersCreator\UploadController@uploadFile',
     'as' => 'ApiUploadFile']
 );
+
+Route::get('/edit', [
+    'uses' => 'BannersCreator\AngularTemplatesController@editTemplates',
+    'as' => 'EditTemplates'
+]);
 
 /*
 |--------------------------------------------------------------------------

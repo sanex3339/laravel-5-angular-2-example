@@ -24,6 +24,11 @@ export class PSDUploader {
     private redirectService: RedirectService;
 
     /**
+     * @type {string}
+     */
+    private redirectRoute: string = '/EditTemplates';
+
+    /**
      * @type {Array}
      */
     private psdTemplates: File[] = [];
@@ -46,6 +51,11 @@ export class PSDUploader {
      * @type UploadedTemplatesService
      */
     private uploadedTemplatesService: UploadedTemplatesService;
+
+    /**
+     * @type {string}
+     */
+    private uploadRoute: string = '/api/upload-file';
 
     constructor (
         @Inject(FileUploadService) fileUploadService: FileUploadService,
@@ -77,10 +87,10 @@ export class PSDUploader {
             this.uploadProgress = progress;
         });
 
-        this.fileUploadService.upload('/api/upload-file', this.psdTemplates).then(
+        this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(
             (result) => {
                 this.saveUploadedTemplatesData(result['files']);
-                this.redirectService.redirect('/Test', 800)
+                this.redirectService.redirect(this.redirectRoute)
             },
             (error) => {
                 document.write(error);

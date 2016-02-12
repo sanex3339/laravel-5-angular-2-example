@@ -37,6 +37,10 @@ System.register(['angular2/core', '../../Services/FileUploadService/FileUploadSe
             PSDUploader = (function () {
                 function PSDUploader(fileUploadService, redirectService, uploadedTemplatesService) {
                     /**
+                     * @type {string}
+                     */
+                    this.redirectRoute = '/EditTemplates';
+                    /**
                      * @type {Array}
                      */
                     this.psdTemplates = [];
@@ -52,6 +56,10 @@ System.register(['angular2/core', '../../Services/FileUploadService/FileUploadSe
                      * @type {boolean}
                      */
                     this.progressBarVisibility = false;
+                    /**
+                     * @type {string}
+                     */
+                    this.uploadRoute = '/api/upload-file';
                     this.fileUploadService = fileUploadService;
                     this.redirectService = redirectService;
                     this.uploadedTemplatesService = uploadedTemplatesService;
@@ -72,9 +80,9 @@ System.register(['angular2/core', '../../Services/FileUploadService/FileUploadSe
                     this.fileUploadService.progress$.subscribe(function (progress) {
                         _this.uploadProgress = progress;
                     });
-                    this.fileUploadService.upload('/api/upload-file', this.psdTemplates).then(function (result) {
+                    this.fileUploadService.upload(this.uploadRoute, this.psdTemplates).then(function (result) {
                         _this.saveUploadedTemplatesData(result['files']);
-                        _this.redirectService.redirect('/Test', 800);
+                        _this.redirectService.redirect(_this.redirectRoute);
                     }, function (error) {
                         document.write(error);
                     });

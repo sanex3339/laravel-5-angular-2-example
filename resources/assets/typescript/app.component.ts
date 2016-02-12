@@ -11,8 +11,8 @@ import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
         useAsDefault: true
     },
     {
-        path: '/test',
-        name: 'Test',
+        path: '/edit',
+        name: 'EditTemplates',
         component: BannersEditor
     }
 ])

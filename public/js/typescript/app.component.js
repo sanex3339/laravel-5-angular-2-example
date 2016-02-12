@@ -37,8 +37,8 @@ System.register(['angular2/core', './Components/BannersEditor/BannersEditor', '.
                             useAsDefault: true
                         },
                         {
-                            path: '/test',
-                            name: 'Test',
+                            path: '/edit',
+                            name: 'EditTemplates',
                             component: BannersEditor_1.BannersEditor
                         }
                     ]),

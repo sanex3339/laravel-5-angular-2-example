@@ -35,6 +35,7 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                  */
                 RedirectService.prototype.redirect = function (link, delay) {
                     var _this = this;
+                    if (delay === void 0) { delay = 800; }
                     return new Promise(function (resolve, reject) {
                         setTimeout(function () {
                             _this.router.navigate([link]);
