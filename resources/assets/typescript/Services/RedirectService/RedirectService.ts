@@ -15,18 +15,17 @@ export class RedirectService {
     }
 
     /**
-     * Redirect on given link route with given data
+     * Redirect on given link route
      *
      * @param link
-     * @param data
      * @param delay
      * @returns {Promise<T>}
      */
-    public redirect (link: string, data: any, delay: number) {
+    public redirect (link: string, delay: number) {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 this.router.navigate([link]);
-                resolve(data);
+                resolve();
             }, delay);
         });
     }

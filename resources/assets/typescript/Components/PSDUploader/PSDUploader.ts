@@ -79,13 +79,26 @@ export class PSDUploader {
 
         this.fileUploadService.upload('/api/upload-file', this.psdTemplates).then(
             (result) => {
-                this.uploadedTemplatesService.addTemplate(new UploadedTemplate('test_image_1', false));
-                this.uploadedTemplatesService.addTemplate(new UploadedTemplate('test_image_2', false));
-                this.redirectService.redirect('/Test', result, 800)
+                this.saveUploadedTemplatesData(result['files']);
+                this.redirectService.redirect('/Test', 800)
             },
             (error) => {
                 document.write(error);
             }
         );
+    }
+
+    /**
+     * Save uploaded templates data into UploadedTemplatesService for
+     * future use inside other components
+     *
+     * @param files
+     */
+    private saveUploadedTemplatesData (files: any[]): void {
+        for (let file of files) {
+            this.uploadedTemplatesService.addTemplate(
+                new UploadedTemplate(file, false)
+            );
+        }
     }
 }

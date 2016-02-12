@@ -73,12 +73,23 @@ System.register(['angular2/core', '../../Services/FileUploadService/FileUploadSe
                         _this.uploadProgress = progress;
                     });
                     this.fileUploadService.upload('/api/upload-file', this.psdTemplates).then(function (result) {
-                        _this.uploadedTemplatesService.addTemplate(new UploadedTemplate_1.UploadedTemplate('test_image_1', false));
-                        _this.uploadedTemplatesService.addTemplate(new UploadedTemplate_1.UploadedTemplate('test_image_2', false));
-                        _this.redirectService.redirect('/Test', result, 800);
+                        _this.saveUploadedTemplatesData(result['files']);
+                        _this.redirectService.redirect('/Test', 800);
                     }, function (error) {
                         document.write(error);
                     });
+                };
+                /**
+                 * Save uploaded templates data into UploadedTemplatesService for
+                 * future use inside other components
+                 *
+                 * @param files
+                 */
+                PSDUploader.prototype.saveUploadedTemplatesData = function (files) {
+                    for (var _i = 0; _i < files.length; _i++) {
+                        var file = files[_i];
+                        this.uploadedTemplatesService.addTemplate(new UploadedTemplate_1.UploadedTemplate(file, false));
+                    }
                 };
                 PSDUploader = __decorate([
                     core_1.Injectable(),

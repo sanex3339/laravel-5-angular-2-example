@@ -27,19 +27,18 @@ System.register(['angular2/core', 'angular2/router'], function(exports_1) {
                     this.router = router;
                 }
                 /**
-                 * Redirect on given link route with given data
+                 * Redirect on given link route
                  *
                  * @param link
-                 * @param data
                  * @param delay
                  * @returns {Promise<T>}
                  */
-                RedirectService.prototype.redirect = function (link, data, delay) {
+                RedirectService.prototype.redirect = function (link, delay) {
                     var _this = this;
                     return new Promise(function (resolve, reject) {
                         setTimeout(function () {
                             _this.router.navigate([link]);
-                            resolve(data);
+                            resolve();
                         }, delay);
                     });
                 };
