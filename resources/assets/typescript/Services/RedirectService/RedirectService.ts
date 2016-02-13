@@ -8,9 +8,7 @@ export class RedirectService {
      */
     private router: Router;
 
-    constructor (
-        @Inject(Router) router: Router
-    ) {
+    constructor (@Inject(Router) router: Router) {
         this.router = router;
     }
 

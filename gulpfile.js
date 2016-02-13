@@ -1,6 +1,7 @@
 var elixir = require('laravel-elixir'),
     elixirTypescript = require('elixir-typescript'),
-    livereload = require('laravel-elixir-livereload');
+    livereload = require('laravel-elixir-livereload'),
+    webpack = require('laravel-elixir-webpack-ex');
 
 /*
  |--------------------------------------------------------------------------
@@ -28,37 +29,30 @@ elixir(function(mix) {
      **/
     mix.copy('node_modules/jquery/dist/jquery.min.js', 'public/js/jquery');
 
-
-    /**
-     * Angular 2
-     **/
-    mix.copy('node_modules/angular2', 'public/js/angular2');
-    mix.copy('node_modules/rxjs', 'public/js/rxjs');
-    mix.copy('node_modules/systemjs', 'public/js/systemjs');
-    mix.copy('node_modules/es6-promise', 'public/js/es6-promise');
-    mix.copy('node_modules/es6-shim', 'public/js/es6-shim');
-    mix.copy('node_modules/zone.js', 'public/js/zone.js');
-
     /**
      * Less
      **/
     mix.less('app.less');
 
     /**
-     * Typescript
+     * Scripts webpack bundling and copying
      **/
-    mix.typescript('app.js','public/js','/**/*.ts',{
-        "target": "ES5",
-        "module": "system",
-        "baseUrl": '.',
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "removeComments": false,
-        "noImplicitAny": false
-    });
+    mix.copy('node_modules/angular2/bundles/angular2-polyfills.js', 'public/js/angular2');
 
+    mix.webpack('app.ts', {
+        resolve: {
+            extensions: ['', '.js', '.ts']
+        },
+        module: {
+            loaders: [
+                { test: /\.ts/, loader: 'ts-loader' }
+            ]
+        }
+    }, 'public/js', 'resources/assets/typescript');
+
+    /**
+     * LiveReload
+     **/
     mix.livereload([
         'public/css/**/*',
         'public/fonts/**/*',

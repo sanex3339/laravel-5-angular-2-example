@@ -1,7 +1,7 @@
 /vendor
 /node_modules
+/public
 Homestead.yaml
 Homestead.json
 .env
-/public/processed-images
-/public/uploads
+.gitignore

@@ -22,9 +22,9 @@ Route::get('/edit', [
 ]);
 
 Route::post('/api/upload-file', [
-        'middleware' => 'cors',
-        'uses' => 'BannersCreator\UploadController@uploadFile',
-        'as' => 'ApiUploadFile']
+    'middleware' => 'cors',
+    'uses' => 'BannersCreator\UploadController@uploadFile',
+    'as' => 'ApiUploadFile']
 );
 
 // Angular 2 templates route
