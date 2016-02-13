@@ -21,7 +21,7 @@ System.register(['./app.component', "angular2/router", 'angular2/platform/browse
             //enableProdMode();
             browser_1.bootstrap(app_component_1.AppComponent, [
                 router_1.ROUTER_PROVIDERS,
-                core_1.provide(router_1.APP_BASE_HREF, { useValue: '/' }),
+                core_1.provide(router_1.LocationStrategy, { useClass: router_1.HashLocationStrategy }),
                 UploadedTemplatesService_1.UploadedTemplatesService
             ]);
         }

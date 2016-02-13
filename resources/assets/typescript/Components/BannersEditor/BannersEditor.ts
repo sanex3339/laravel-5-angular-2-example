@@ -4,7 +4,7 @@ import { UploadedTemplatesService } from "../../Services/UploadedTemplatesServic
 @Injectable()
 @Component({
     'selector': 'state-template',
-    'template': 'test'
+    'templateUrl': '/templates/BannersEditor.main'
 })
 export class BannersEditor {
     /**
@@ -17,6 +17,7 @@ export class BannersEditor {
     constructor (uploadedTemplatesService: UploadedTemplatesService) {
         this.uploadedTemplatesService = uploadedTemplatesService;
 
+        console.log('BannersEditor was loaded');
         console.log(this.uploadedTemplatesService.getUploadedTemplates());
     }
 }

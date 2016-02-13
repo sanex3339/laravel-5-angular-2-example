@@ -1,5 +1,5 @@
 import { AppComponent } from './app.component';
-import { APP_BASE_HREF, ROUTER_PROVIDERS } from "angular2/router";
+import { HashLocationStrategy, LocationStrategy, ROUTER_PROVIDERS } from "angular2/router";
 import { bootstrap } from 'angular2/platform/browser';
 import { enableProdMode, provide } from "angular2/core";
 import { UploadedTemplatesService } from "./Services/UploadedTemplatesService/UploadedTemplatesService";
@@ -7,6 +7,6 @@ import { UploadedTemplatesService } from "./Services/UploadedTemplatesService/Up
 //enableProdMode();
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
-    provide(APP_BASE_HREF, {useValue: '/'}),
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
     UploadedTemplatesService
 ]);

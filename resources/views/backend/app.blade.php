@@ -3,6 +3,7 @@
     <head>
         <title>Banners Creator</title>
         <link rel="stylesheet" href="/css/app.css">
+        <base href="/"/>
     </head>
     <body>
 

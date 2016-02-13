@@ -22,13 +22,14 @@ System.register(['angular2/core', "../../Services/UploadedTemplatesService/Uploa
             BannersEditor = (function () {
                 function BannersEditor(uploadedTemplatesService) {
                     this.uploadedTemplatesService = uploadedTemplatesService;
+                    console.log('BannersEditor was loaded');
                     console.log(this.uploadedTemplatesService.getUploadedTemplates());
                 }
                 BannersEditor = __decorate([
                     core_1.Injectable(),
                     core_1.Component({
                         'selector': 'state-template',
-                        'template': 'test'
+                        'templateUrl': '/templates/BannersEditor.main'
                     }), 
                     __metadata('design:paramtypes', [UploadedTemplatesService_1.UploadedTemplatesService])
                 ], BannersEditor);

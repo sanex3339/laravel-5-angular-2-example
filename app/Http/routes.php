@@ -31,7 +31,9 @@ Route::post('/api/upload-file', [
 );
 
 Route::get('/edit', [
-    'uses' => 'BannersCreator\AngularTemplatesController@editTemplates',
+    function () {
+        return Redirect::to('/#/edit');
+    },
     'as' => 'EditTemplates'
 ]);
 
