@@ -12,29 +12,25 @@
 */
 
 Route::get('/', [
-    function () {
-        return view('backend.content');
-    },
+    'uses' => 'BannersCreator\AngularRoutesController@index',
     'as' => 'home'
 ]);
 
-// angular 2 templates route
-Route::get('/templates/{template}', [
-    'uses' => 'BannersCreator\AngularTemplatesController@index',
-    'as' => 'AngularTemplatesRoute'
+Route::get('/edit', [
+    'uses' => 'BannersCreator\AngularRoutesController@index',
+    'as' => 'edit'
 ]);
 
 Route::post('/api/upload-file', [
-    'middleware' => 'cors',
-    'uses' => 'BannersCreator\UploadController@uploadFile',
-    'as' => 'ApiUploadFile']
+        'middleware' => 'cors',
+        'uses' => 'BannersCreator\UploadController@uploadFile',
+        'as' => 'ApiUploadFile']
 );
 
-Route::get('/edit', [
-    function () {
-        return Redirect::to('/#/edit');
-    },
-    'as' => 'EditTemplates'
+// Angular 2 templates route
+Route::get('/templates/{template}', [
+    'uses' => 'BannersCreator\AngularTemplatesController@index',
+    'as' => 'AngularTemplatesRoute'
 ]);
 
 /*
