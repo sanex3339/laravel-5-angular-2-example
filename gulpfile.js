@@ -1,8 +1,10 @@
 process.env.DISABLE_NOTIFIER = true;
 
 var elixir = require('laravel-elixir'),
-    livereload = require('laravel-elixir-livereload'),
-    webpack = require('laravel-elixir-webpack-ex');
+    webpack = require('webpack');
+
+require('laravel-elixir-livereload');
+require('laravel-elixir-webpack-ex');
 
 /*
  |--------------------------------------------------------------------------
@@ -38,7 +40,7 @@ elixir(function(mix) {
     /**
      * Scripts webpack bundling and copying
      **/
-    mix.copy('node_modules/angular2/bundles/angular2-polyfills.js', 'public/js/angular2');
+    mix.copy('node_modules/angular2/bundles/angular2-polyfills.min.js', 'public/js/angular2');
 
     mix.webpack('app.ts', {
         resolve: {
@@ -48,7 +50,16 @@ elixir(function(mix) {
             loaders: [
                 { test: /\.ts/, loader: 'ts-loader' }
             ]
-        }
+        },
+        plugins: [
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    warnings: false
+                },
+                minimize: true,
+                mangle: false
+            })
+        ]
     }, 'public/js', 'resources/assets/typescript');
 
     /**

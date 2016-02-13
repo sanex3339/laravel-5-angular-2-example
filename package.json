@@ -17,6 +17,7 @@
     "rxjs": "5.0.0-beta.0",
     "underscore": "^1.8.3",
     "ts-loader": "0.8.1",
+    "webpack": "1.12.13",
     "zone.js": "0.5.14"
   }
 }
