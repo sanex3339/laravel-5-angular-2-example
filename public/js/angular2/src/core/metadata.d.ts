@@ -1110,7 +1110,7 @@ export declare var ViewChild: ViewChildFactory;
  *   shown: boolean;
  *
  *   constructor(private @Query(Item) items:QueryList<Item>) {
- *     items.onChange(() => console.log(items.length));
+ *     items.changes.subscribe(() => console.log(items.length));
  *   }
  * }
  * ```
@@ -1206,7 +1206,7 @@ export declare var Input: InputFactory;
  * @Component({
  *   selector: 'app',
  *   template: `
- *     <interval-dir (every-second)="everySecond()" (every-five-seconds)="everyFiveSeconds()">
+ *     <interval-dir (everySecond)="everySecond()" (everyFiveSeconds)="everyFiveSeconds()">
  *     </interval-dir>
  *   `,
  *   directives: [IntervalDir]

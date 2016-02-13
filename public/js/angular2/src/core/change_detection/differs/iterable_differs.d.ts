@@ -5,15 +5,22 @@ import { Provider } from 'angular2/src/core/di';
  * respond to changes in an iterable by effecting equivalent changes in the DOM.
  */
 export interface IterableDiffer {
-    diff(object: Object): any;
+    diff(object: any): any;
     onDestroy(): any;
+}
+/**
+  * An optional function passed into {@link NgFor} that defines how to track
+  * items in an iterable (e.g. by index or id)
+ */
+export interface TrackByFn {
+    (index: number, item: any): any;
 }
 /**
  * Provides a factory for {@link IterableDiffer}.
  */
 export interface IterableDifferFactory {
-    supports(objects: Object): boolean;
-    create(cdRef: ChangeDetectorRef): IterableDiffer;
+    supports(objects: any): boolean;
+    create(cdRef: ChangeDetectorRef, trackByFn?: TrackByFn): IterableDiffer;
 }
 /**
  * A repository of different iterable diffing strategies used by NgFor, NgClass, and others.
@@ -42,5 +49,5 @@ export declare class IterableDiffers {
      * ```
      */
     static extend(factories: IterableDifferFactory[]): Provider;
-    find(iterable: Object): IterableDifferFactory;
+    find(iterable: any): IterableDifferFactory;
 }

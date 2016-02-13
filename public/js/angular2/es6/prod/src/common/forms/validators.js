@@ -1,4 +1,4 @@
-import { isBlank, isPresent, CONST_EXPR } from 'angular2/src/facade/lang';
+import { isBlank, isPresent, CONST_EXPR, isString } from 'angular2/src/facade/lang';
 import { PromiseWrapper } from 'angular2/src/facade/promise';
 import { ObservableWrapper } from 'angular2/src/facade/async';
 import { StringMapWrapper } from 'angular2/src/facade/collection';
@@ -39,7 +39,9 @@ export class Validators {
      * Validator that requires controls to have a non-empty value.
      */
     static required(control) {
-        return isBlank(control.value) || control.value == "" ? { "required": true } : null;
+        return isBlank(control.value) || (isString(control.value) && control.value == "") ?
+            { "required": true } :
+            null;
     }
     /**
      * Validator that requires controls to have a value of a minimum length.

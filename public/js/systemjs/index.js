@@ -5,7 +5,7 @@ if (typeof URL === 'undefined')
 
 var version = require('./package.json').version;
 
-var isWindows = process.platform.match(/^win/);
+var isWindows = typeof process.platform != 'undefined' && process.platform.match(/^win/);
 
 // set transpiler paths in Node
 var nodeResolver = typeof process != 'undefined' && typeof require != 'undefined' && require.resolve;
@@ -26,9 +26,6 @@ function configNodePath(loader, module, nodeModule, wildcard) {
 var SystemJSLoader = require('./dist/system.src').constructor;
 
 // standard class extend SystemJSLoader to SystemJSNodeLoader
-function SystemJSNodeLoaderProto() {}
-SystemJSNodeLoaderProto.prototype = SystemJSLoader.prototype;
-
 function SystemJSNodeLoader() {
   SystemJSLoader.call(this);
 
@@ -40,11 +37,14 @@ function SystemJSNodeLoader() {
     configNodePath(this, 'babel-runtime/*', 'babel-runtime', true);
   }
 }
-SystemJSNodeLoader.prototype = new SystemJSNodeLoaderProto();
+SystemJSNodeLoader.prototype = Object.create(SystemJSLoader.prototype);
 SystemJSNodeLoader.prototype.constructor = SystemJSNodeLoader;
 
 var System = new SystemJSNodeLoader();
 
 System.version = version + ' Node';
 
-module.exports = global.System = System;
+if (typeof global != 'undefined')
+  global.System = global.SystemJS = System;
+
+module.exports = System;

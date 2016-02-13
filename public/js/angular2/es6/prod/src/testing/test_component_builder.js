@@ -10,11 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { DirectiveResolver, DynamicComponentLoader, Injector, Injectable, ViewResolver } from 'angular2/core';
 import { isPresent } from 'angular2/src/facade/lang';
 import { MapWrapper } from 'angular2/src/facade/collection';
-import { internalView } from 'angular2/src/core/linker/view_ref';
 import { el } from './utils';
 import { DOCUMENT } from 'angular2/src/platform/dom/dom_tokens';
 import { DOM } from 'angular2/src/platform/dom/dom_adapter';
-import { DebugElement_ } from 'angular2/src/core/debug/debug_element';
+import { getDebugNode } from 'angular2/src/core/debug/debug_node';
 /**
  * Fixture for debugging and testing a component.
  */
@@ -23,10 +22,11 @@ export class ComponentFixture {
 export class ComponentFixture_ extends ComponentFixture {
     constructor(componentRef) {
         super();
-        this.debugElement = new DebugElement_(internalView(componentRef.hostView), 0);
+        this._componentParentView = componentRef.hostView.internalView;
+        this.elementRef = this._componentParentView.appElements[0].ref;
+        this.debugElement = getDebugNode(this._componentParentView.rootNodesOrAppElements[0].nativeElement);
         this.componentInstance = this.debugElement.componentInstance;
         this.nativeElement = this.debugElement.nativeElement;
-        this._componentParentView = internalView(componentRef.hostView);
         this._componentRef = componentRef;
     }
     detectChanges() {

@@ -217,7 +217,7 @@ export class NgZone {
      */
     get hasPendingTimers() { return this._pendingTimeouts.length > 0; }
     /**
-     * Whether there are any outstanding asychnronous tasks of any kind that are
+     * Whether there are any outstanding asynchronous tasks of any kind that are
      * scheduled to run within Angular zone.
      *
      * Useful as a signal of UI stability. For example, when a test reaches a
@@ -286,7 +286,8 @@ export class NgZone {
         var ngZone = this;
         var errorHandling;
         if (enableLongStackTrace) {
-            errorHandling = StringMapWrapper.merge(Zone.longStackTraceZone, { onError: function (e) { ngZone._notifyOnError(this, e); } });
+            errorHandling =
+                StringMapWrapper.merge(global.Zone.longStackTraceZone, { onError: function (e) { ngZone._notifyOnError(this, e); } });
         }
         else {
             errorHandling = { onError: function (e) { ngZone._notifyOnError(this, e); } };
@@ -361,14 +362,14 @@ export class NgZone {
                         fn();
                         ListWrapper.remove(ngZone._pendingTimeouts, id);
                     };
-                    id = parentSetTimeout(cb, delay, args);
+                    id = parentSetTimeout.call(this, cb, delay, args);
                     ngZone._pendingTimeouts.push(id);
                     return id;
                 };
             },
             '$clearTimeout': function (parentClearTimeout) {
                 return function (id) {
-                    parentClearTimeout(id);
+                    parentClearTimeout.call(this, id);
                     ListWrapper.remove(ngZone._pendingTimeouts, id);
                 };
             },

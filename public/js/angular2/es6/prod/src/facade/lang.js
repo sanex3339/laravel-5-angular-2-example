@@ -11,7 +11,6 @@ if (typeof window === 'undefined') {
 else {
     globalScope = window;
 }
-;
 export const IS_DART = false;
 // Need to declare a new variable for global here since TypeScript
 // exports the original value of the symbol.
@@ -100,6 +99,9 @@ export function stringify(token) {
     }
     if (token.name) {
         return token.name;
+    }
+    if (token.overriddenName) {
+        return token.overriddenName;
     }
     var res = token.toString();
     var newLineIndex = res.indexOf("\n");
@@ -328,4 +330,20 @@ export function getSymbolIterator() {
         }
     }
     return _symbolIterator;
+}
+export function evalExpression(sourceUrl, expr, declarations, vars) {
+    var fnBody = `${declarations}\nreturn ${expr}\n//# sourceURL=${sourceUrl}`;
+    var fnArgNames = [];
+    var fnArgValues = [];
+    for (var argName in vars) {
+        fnArgNames.push(argName);
+        fnArgValues.push(vars[argName]);
+    }
+    return new Function(...fnArgNames.concat(fnBody))(...fnArgValues);
+}
+export function isPrimitive(obj) {
+    return !isJsObject(obj);
+}
+export function hasConstructor(value, type) {
+    return value.constructor === type;
 }

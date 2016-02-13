@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from 'angular2/core';
 import { StringMapWrapper } from 'angular2/src/facade/collection';
-import { isPresent, isArray, CONST_EXPR } from 'angular2/src/facade/lang';
+import { isPresent, isArray } from 'angular2/src/facade/lang';
 import * as modelModule from './model';
 /**
  * Creates a form object from a user-specified configuration.
@@ -110,19 +110,3 @@ FormBuilder = __decorate([
     Injectable(), 
     __metadata('design:paramtypes', [])
 ], FormBuilder);
-/**
- * Shorthand set of providers used for building Angular forms.
- *
- * ### Example
- *
- * ```typescript
- * bootstrap(MyApp, [FORM_PROVIDERS]);
- * ```
- */
-export const FORM_PROVIDERS = CONST_EXPR([FormBuilder]);
-/**
- * See {@link FORM_PROVIDERS} instead.
- *
- * @deprecated
- */
-export const FORM_BINDINGS = FORM_PROVIDERS;

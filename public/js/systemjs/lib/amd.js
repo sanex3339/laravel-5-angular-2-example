@@ -1,7 +1,5 @@
 /*
   SystemJS AMD Format
-  Provides the AMD module format definition at System.format.amd
-  as well as a RequireJS-style require on System.require
 */
 (function() {
   // AMD Module Format Detection RegEx
@@ -11,10 +9,6 @@
 
   hook('fetch', function(fetch) {
     return function(load) {
-      if (load.metadata.format === 'amd' 
-          && !load.metadata.authorization 
-          && load.metadata.scriptLoad !== false)
-        load.metadata.scriptLoad = true;
       // script load implies define global leak
       if (load.metadata.scriptLoad && isBrowser)
         this.get('@@amd-helpers').createDefine();

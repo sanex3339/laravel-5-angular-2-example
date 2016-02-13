@@ -27,7 +27,7 @@ import { isSuccess, getResponseURL } from '../http_utils';
 export class XHRConnection {
     constructor(req, browserXHR, baseResponseOptions) {
         this.request = req;
-        this.response = new Observable(responseObserver => {
+        this.response = new Observable((responseObserver) => {
             let _xhr = browserXHR.build();
             _xhr.open(RequestMethod[req.method].toUpperCase(), req.url);
             // load event handler

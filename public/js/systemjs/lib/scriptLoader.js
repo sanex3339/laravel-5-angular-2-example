@@ -101,7 +101,7 @@
     return function(load) {
       var loader = this;
 
-      if (!load.metadata.scriptLoad || (!isBrowser && !isWorker))
+      if (load.metadata.format == 'json' || !load.metadata.scriptLoad || (!isBrowser && !isWorker))
         return fetch.call(this, load);
 
       if (isWorker)
@@ -155,7 +155,7 @@
 
           // if nothing registered, then something went wrong
           if (!load.metadata.entry && !load.metadata.bundle)
-            reject(new Error(load.name + ' did not call System.register or AMD define'));
+            reject(new Error(load.name + ' did not call System.register or AMD define. If loading a global module configure the global name via the meta exports property for script injection support.'));
 
           resolve('');
         }

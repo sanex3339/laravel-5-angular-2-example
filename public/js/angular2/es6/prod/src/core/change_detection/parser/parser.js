@@ -16,7 +16,7 @@ import { reflector, Reflector } from 'angular2/src/core/reflection/reflection';
 import { EmptyExpr, ImplicitReceiver, PropertyRead, PropertyWrite, SafePropertyRead, LiteralPrimitive, Binary, PrefixNot, Conditional, BindingPipe, Chain, KeyedRead, KeyedWrite, LiteralArray, LiteralMap, Interpolation, MethodCall, SafeMethodCall, FunctionCall, TemplateBinding, ASTWithSource, Quote } from './ast';
 var _implicitReceiver = new ImplicitReceiver();
 // TODO(tbosch): Cannot make this const/final right now because of the transpiler...
-var INTERPOLATION_REGEXP = /\{\{(.*?)\}\}/g;
+var INTERPOLATION_REGEXP = /\{\{([\s\S]*?)\}\}/g;
 class ParseException extends BaseException {
     constructor(message, input, errLocation, ctxLocation) {
         super(`Parser Error: ${message} ${errLocation} [${input}] in ${ctxLocation}`);

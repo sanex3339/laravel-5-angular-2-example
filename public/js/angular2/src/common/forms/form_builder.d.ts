@@ -1,4 +1,3 @@
-import { Type } from 'angular2/src/facade/lang';
 import * as modelModule from './model';
 /**
  * Creates a form object from a user-specified configuration.
@@ -63,19 +62,3 @@ export declare class FormBuilder {
      */
     array(controlsConfig: any[], validator?: Function, asyncValidator?: Function): modelModule.ControlArray;
 }
-/**
- * Shorthand set of providers used for building Angular forms.
- *
- * ### Example
- *
- * ```typescript
- * bootstrap(MyApp, [FORM_PROVIDERS]);
- * ```
- */
-export declare const FORM_PROVIDERS: Type[];
-/**
- * See {@link FORM_PROVIDERS} instead.
- *
- * @deprecated
- */
-export declare const FORM_BINDINGS: Type[];

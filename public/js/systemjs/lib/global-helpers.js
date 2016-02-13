@@ -1,3 +1,18 @@
+hook('reduceRegister_', function(reduceRegister) {
+  return function(load, register) {
+    if (register || !load.metadata.exports)
+      return reduceRegister.call(this, load, register);
+
+    load.metadata.format = 'global';
+    var entry = load.metadata.entry = createEntry();
+    entry.deps = load.metadata.deps;
+    var globalValue = readMemberExpression(load.metadata.exports, __global);
+    entry.execute = function() {
+      return globalValue;
+    };
+  };
+});
+
 hookConstructor(function(constructor) {
   return function() {
     var loader = this;
@@ -6,7 +21,8 @@ hookConstructor(function(constructor) {
     var hasOwnProperty = Object.prototype.hasOwnProperty;
 
     // bare minimum ignores for IE8
-    var ignoredGlobalProps = ['_g', 'sessionStorage', 'localStorage', 'clipboardData', 'frames', 'frameElement', 'external', 'mozAnimationStartTime', 'webkitStorageInfo', 'webkitIndexedDB'];
+    var ignoredGlobalProps = ['_g', 'sessionStorage', 'localStorage', 'clipboardData', 'frames', 'frameElement', 'external', 
+      'mozAnimationStartTime', 'webkitStorageInfo', 'webkitIndexedDB', 'mozInnerScreenY', 'mozInnerScreenX'];
 
     var globalSnapshot;
 

@@ -1,12 +1,12 @@
 import {
   ComponentRef,
-  DebugElement,
   DirectiveResolver,
   DynamicComponentLoader,
   Injector,
   Injectable,
   ViewMetadata,
-  ViewRef,
+  ElementRef,
+  EmbeddedViewRef,
   ViewResolver,
   provide
 } from 'angular2/core';
@@ -15,15 +15,15 @@ import {Type, isPresent, isBlank} from 'angular2/src/facade/lang';
 import {Promise} from 'angular2/src/facade/async';
 import {ListWrapper, MapWrapper} from 'angular2/src/facade/collection';
 
+import {ViewRef_} from 'angular2/src/core/linker/view_ref';
 import {AppView} from 'angular2/src/core/linker/view';
-import {internalView} from 'angular2/src/core/linker/view_ref';
 
 import {el} from './utils';
 
 import {DOCUMENT} from 'angular2/src/platform/dom/dom_tokens';
 import {DOM} from 'angular2/src/platform/dom/dom_adapter';
 
-import {DebugElement_} from 'angular2/src/core/debug/debug_element';
+import {DebugNode, DebugElement, getDebugNode} from 'angular2/src/core/debug/debug_node';
 
 
 /**
@@ -46,6 +46,11 @@ export abstract class ComponentFixture {
   nativeElement: any;
 
   /**
+   * The ElementRef for the element at the root of the component.
+   */
+  elementRef: ElementRef;
+
+  /**
    * Trigger a change detection cycle for the component.
    */
   abstract detectChanges(): void;
@@ -65,10 +70,12 @@ export class ComponentFixture_ extends ComponentFixture {
 
   constructor(componentRef: ComponentRef) {
     super();
-    this.debugElement = new DebugElement_(internalView(<ViewRef>componentRef.hostView), 0);
+    this._componentParentView = (<ViewRef_>componentRef.hostView).internalView;
+    this.elementRef = this._componentParentView.appElements[0].ref;
+    this.debugElement = <DebugElement>getDebugNode(
+        this._componentParentView.rootNodesOrAppElements[0].nativeElement);
     this.componentInstance = this.debugElement.componentInstance;
     this.nativeElement = this.debugElement.nativeElement;
-    this._componentParentView = internalView(<ViewRef>componentRef.hostView);
     this._componentRef = componentRef;
   }
 

@@ -10,11 +10,12 @@ import { Promise } from 'angular2/src/facade/async';
  * ```
  * import {Component} from 'angular2/core';
  * import {bootstrap} from 'angular2/platform/browser';
- * import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig} from 'angular2/router';
+ * import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteParams} from
+ * 'angular2/router';
  *
  * @Component({directives: [ROUTER_DIRECTIVES]})
  * @RouteConfig([
- *  {path: '/user/:id', component: UserCmp, as: 'UserCmp'},
+ *  {path: '/user/:id', component: UserCmp, name: 'UserCmp'},
  * ])
  * class AppCmp {}
  *
@@ -46,14 +47,14 @@ export declare class RouteParams {
  * ### Example
  *
  * ```
- * import {Component, View} from 'angular2/core';
+ * import {Component} from 'angular2/core';
  * import {bootstrap} from 'angular2/platform/browser';
- * import {Router, ROUTER_DIRECTIVES, routerBindings, RouteConfig} from 'angular2/router';
+ * import {Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS, RouteConfig, RouteData} from
+ * 'angular2/router';
  *
- * @Component({...})
- * @View({directives: [ROUTER_DIRECTIVES]})
+ * @Component({directives: [ROUTER_DIRECTIVES]})
  * @RouteConfig([
- *  {path: '/user/:id', component: UserCmp, as: 'UserCmp', data: {isAdmin: true}},
+ *  {path: '/user/:id', component: UserCmp, name: 'UserCmp', data: {isAdmin: true}},
  * ])
  * class AppCmp {}
  *
@@ -66,7 +67,7 @@ export declare class RouteParams {
  *   }
  * }
  *
- * bootstrap(AppCmp, routerBindings(AppCmp));
+ * bootstrap(AppCmp, ROUTER_PROVIDERS);
  * ```
  */
 export declare class RouteData {
@@ -113,9 +114,12 @@ export declare abstract class Instruction {
     auxInstruction: {
         [key: string]: Instruction;
     };
+    constructor(component: ComponentInstruction, child: Instruction, auxInstruction: {
+        [key: string]: Instruction;
+    });
     urlPath: string;
     urlParams: string[];
-    specificity: number;
+    specificity: string;
     abstract resolveComponent(): Promise<ComponentInstruction>;
     /**
      * converts the instruction into a URL string
@@ -137,11 +141,6 @@ export declare abstract class Instruction {
  * a resolved instruction has an outlet instruction for itself, but maybe not for...
  */
 export declare class ResolvedInstruction extends Instruction {
-    component: ComponentInstruction;
-    child: Instruction;
-    auxInstruction: {
-        [key: string]: Instruction;
-    };
     constructor(component: ComponentInstruction, child: Instruction, auxInstruction: {
         [key: string]: Instruction;
     });
@@ -151,8 +150,6 @@ export declare class ResolvedInstruction extends Instruction {
  * Represents a resolved default route
  */
 export declare class DefaultInstruction extends Instruction {
-    component: ComponentInstruction;
-    child: DefaultInstruction;
     constructor(component: ComponentInstruction, child: DefaultInstruction);
     resolveComponent(): Promise<ComponentInstruction>;
     toLinkUrl(): string;
@@ -170,9 +167,11 @@ export declare class UnresolvedInstruction extends Instruction {
     resolveComponent(): Promise<ComponentInstruction>;
 }
 export declare class RedirectInstruction extends ResolvedInstruction {
+    private _specificity;
     constructor(component: ComponentInstruction, child: Instruction, auxInstruction: {
         [key: string]: Instruction;
-    });
+    }, _specificity: string);
+    specificity: string;
 }
 /**
  * A `ComponentInstruction` represents the route state for a single component. An `Instruction` is
@@ -181,7 +180,7 @@ export declare class RedirectInstruction extends ResolvedInstruction {
  * `ComponentInstructions` is a public API. Instances of `ComponentInstruction` are passed
  * to route lifecycle hooks, like {@link CanActivate}.
  *
- * `ComponentInstruction`s are [https://en.wikipedia.org/wiki/Hash_consing](hash consed). You should
+ * `ComponentInstruction`s are [hash consed](https://en.wikipedia.org/wiki/Hash_consing). You should
  * never construct one yourself with "new." Instead, rely on {@link Router/RouteRecognizer} to
  * construct `ComponentInstruction`s.
  *
@@ -192,13 +191,13 @@ export declare class ComponentInstruction {
     urlParams: string[];
     componentType: any;
     terminal: boolean;
-    specificity: number;
+    specificity: string;
     params: {
         [key: string]: any;
     };
     reuse: boolean;
     routeData: RouteData;
-    constructor(urlPath: string, urlParams: string[], data: RouteData, componentType: any, terminal: boolean, specificity: number, params?: {
+    constructor(urlPath: string, urlParams: string[], data: RouteData, componentType: any, terminal: boolean, specificity: string, params?: {
         [key: string]: any;
     });
 }

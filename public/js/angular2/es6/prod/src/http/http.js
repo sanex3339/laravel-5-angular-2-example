@@ -172,7 +172,8 @@ export let Jsonp = class extends Http {
     request(url, options) {
         var responseObservable;
         if (isString(url)) {
-            url = new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Get, url));
+            url =
+                new Request(mergeOptions(this._defaultOptions, options, RequestMethod.Get, url));
         }
         if (url instanceof Request) {
             if (url.method !== RequestMethod.Get) {

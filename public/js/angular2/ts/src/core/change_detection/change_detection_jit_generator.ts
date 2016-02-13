@@ -66,8 +66,8 @@ export class ChangeDetectorJITGenerator {
   generate(): Function {
     var factorySource = `
       ${this.generateSource()}
-      return function(dispatcher) {
-        return new ${this.typeName}(dispatcher);
+      return function() {
+        return new ${this.typeName}();
       }
     `;
     return new Function(this.abstractChangeDetectorVarName, this.changeDetectionUtilVarName,
@@ -77,9 +77,9 @@ export class ChangeDetectorJITGenerator {
 
   generateSource(): string {
     return `
-      var ${this.typeName} = function ${this.typeName}(dispatcher) {
+      var ${this.typeName} = function ${this.typeName}() {
         ${this.abstractChangeDetectorVarName}.call(
-            this, ${JSON.stringify(this.id)}, dispatcher, ${this.records.length},
+            this, ${JSON.stringify(this.id)}, ${this.records.length},
             ${this.typeName}.gen_propertyBindingTargets, ${this.typeName}.gen_directiveIndices,
             ${codify(this.changeDetectionStrategy)});
         this.dehydrateDirectives(false);
@@ -199,13 +199,14 @@ export class ChangeDetectorJITGenerator {
   /** @internal */
   _maybeGenDehydrateDirectives(): string {
     var destroyPipesCode = this._names.genPipeOnDestroy();
-    if (destroyPipesCode) {
-      destroyPipesCode = `if (destroyPipes) { ${destroyPipesCode} }`;
-    }
+    var destroyDirectivesCode = this._logic.genDirectivesOnDestroy(this.directiveRecords);
     var dehydrateFieldsCode = this._names.genDehydrateFields();
-    if (!destroyPipesCode && !dehydrateFieldsCode) return '';
+    if (!destroyPipesCode && !destroyDirectivesCode && !dehydrateFieldsCode) return '';
     return `${this.typeName}.prototype.dehydrateDirectives = function(destroyPipes) {
-        ${destroyPipesCode}
+        if (destroyPipes) {
+          ${destroyPipesCode}
+          ${destroyDirectivesCode}
+        }
         ${dehydrateFieldsCode}
     }`;
   }
@@ -349,6 +350,7 @@ export class ChangeDetectorJITGenerator {
     var condition = `!${pipe}.pure || (${contexOrArgCheck.join(" || ")})`;
 
     var check = `
+      ${this._genThrowOnChangeCheck(oldValue, newValue)}
       if (${this.changeDetectionUtilVarName}.looseNotIdentical(${oldValue}, ${newValue})) {
         ${newValue} = ${this.changeDetectionUtilVarName}.unwrapValue(${newValue})
         ${this._genChangeMarker(r)}
@@ -376,6 +378,7 @@ export class ChangeDetectorJITGenerator {
     `;
 
     var check = `
+      ${this._genThrowOnChangeCheck(oldValue, newValue)}
       if (${this.changeDetectionUtilVarName}.looseNotIdentical(${oldValue}, ${newValue})) {
         ${this._genChangeMarker(r)}
         ${this._genUpdateDirectiveOrElement(r)}
@@ -408,7 +411,6 @@ export class ChangeDetectorJITGenerator {
     if (!r.lastInBinding) return "";
 
     var newValue = this._names.getLocalName(r.selfIndex);
-    var oldValue = this._names.getFieldName(r.selfIndex);
     var notifyDebug = this.genConfig.logBindingUpdate ? `this.logBindingUpdate(${newValue});` : "";
 
     var br = r.bindingRecord;
@@ -416,14 +418,12 @@ export class ChangeDetectorJITGenerator {
       var directiveProperty =
           `${this._names.getDirectiveName(br.directiveRecord.directiveIndex)}.${br.target.name}`;
       return `
-        ${this._genThrowOnChangeCheck(oldValue, newValue)}
         ${directiveProperty} = ${newValue};
         ${notifyDebug}
         ${IS_CHANGED_LOCAL} = true;
       `;
     } else {
       return `
-        ${this._genThrowOnChangeCheck(oldValue, newValue)}
         this.notifyDispatcher(${newValue});
         ${notifyDebug}
       `;
@@ -434,7 +434,7 @@ export class ChangeDetectorJITGenerator {
   _genThrowOnChangeCheck(oldValue: string, newValue: string): string {
     if (assertionsEnabled()) {
       return `
-        if(throwOnChange) {
+        if (throwOnChange && !${this.changeDetectionUtilVarName}.devModeEqual(${oldValue}, ${newValue})) {
           this.throwOnChangeError(${oldValue}, ${newValue});
         }
         `;

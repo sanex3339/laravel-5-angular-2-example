@@ -26,7 +26,7 @@
  *    - executingRequire indicates require drives execution for circularity of dynamic modules
  *    - declarative optional boolean indicating which of the above
  *
- * Can preload modules directly on System.defined['my/module'] = { deps, execute, executingRequire }
+ * Can preload modules directly on SystemJS.defined['my/module'] = { deps, execute, executingRequire }
  *
  * Then the entry gets populated with derived information during processing:
  *    - normalizedDeps derived from deps, created in instantiate
@@ -50,10 +50,18 @@
  * module binding table
  *
  */
+
+var leadingCommentAndMetaRegEx = /^(\s*\/\*[^\*]*(\*(?!\/)[^\*]*)*\*\/|\s*\/\/[^\n]*|\s*"[^"]+"\s*;?|\s*'[^']+'\s*;?)*\s*/;
+function detectRegisterFormat(source) {
+  var leadingCommentAndMeta = source.match(leadingCommentAndMetaRegEx);
+  return leadingCommentAndMeta && source.substr(leadingCommentAndMeta[0].length, 15) == 'System.register';
+}
+
 function createEntry() {
   return {
     name: null,
     deps: null,
+    originalIndices: null,
     declare: null,
     execute: null,
     executingRequire: false,
@@ -97,7 +105,7 @@ function createEntry() {
     // ideally wouldn't apply map config to bundle names but 
     // dependencies go through map regardless so we can't restrict
     // could reconsider in shift to new spec
-    entry.name = name && (this.normalizeSync || this.normalize).call(this, name);
+    entry.name = name && (this.decanonicalize || this.normalize).call(this, name);
     entry.declarative = true;
     entry.deps = deps;
     entry.declare = declare;
@@ -117,7 +125,7 @@ function createEntry() {
 
     // dynamic
     var entry = createEntry();
-    entry.name = name && (this.normalizeSync || this.normalize).call(this, name);
+    entry.name = name && (this.decanonicalize || this.normalize).call(this, name);
     entry.deps = deps;
     entry.execute = execute;
     entry.executingRequire = declare;
@@ -283,7 +291,7 @@ function createEntry() {
 
       module.locked = false;
       return value;
-    });
+    }, { id: entry.name });
     
     module.setters = declaration.setters;
     module.execute = declaration.execute;
@@ -459,21 +467,12 @@ function createEntry() {
     };
   });
 
-  var leadingCommentAndMetaRegEx = /^\s*(\/\*[^\*]*(\*(?!\/)[^\*]*)*\*\/|\s*\/\/[^\n]*|\s*"[^"]+"\s*;?|\s*'[^']+'\s*;?)*\s*/;
-  function detectRegisterFormat(source) {
-    var leadingCommentAndMeta = source.match(leadingCommentAndMetaRegEx);
-    return leadingCommentAndMeta && source.substr(leadingCommentAndMeta[0].length, 15) == 'System.register';
-  }
-
   hook('fetch', function(fetch) {
     return function(load) {
       if (this.defined[load.name]) {
         load.metadata.format = 'defined';
         return '';
       }
-      
-      if (load.metadata.format == 'register' && !load.metadata.authorization && load.metadata.scriptLoad !== false)
-        load.metadata.scriptLoad = true;
 
       load.metadata.deps = load.metadata.deps || [];
       
@@ -496,6 +495,13 @@ function createEntry() {
 
   hook('instantiate', function(instantiate) {
     return function(load) {
+      if (load.metadata.format == 'detect')
+        load.metadata.format = undefined;
+
+      // assumes previous instantiate is sync
+      // (core json support)
+      instantiate.call(this, load);
+
       var loader = this;
 
       var entry;
@@ -503,7 +509,9 @@ function createEntry() {
       // first we check if this module has already been defined in the registry
       if (loader.defined[load.name]) {
         entry = loader.defined[load.name];
-        entry.deps = entry.deps.concat(load.metadata.deps);
+        // don't support deps for ES modules
+        if (!entry.declarative)
+          entry.deps = entry.deps.concat(load.metadata.deps);
       }
 
       // picked up already by an anonymous System.register script injection

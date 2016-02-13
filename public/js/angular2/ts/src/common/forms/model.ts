@@ -14,7 +14,7 @@ export const VALID = "VALID";
 export const INVALID = "INVALID";
 
 /**
- * Indicates that a Control is pending, i.e. that async validation is occuring and
+ * Indicates that a Control is pending, i.e. that async validation is occurring and
  * errors are not yet available for the input value.
  */
 export const PENDING = "PENDING";
@@ -206,6 +206,16 @@ export abstract class AbstractControl {
 
   hasError(errorCode: string, path: string[] = null): boolean {
     return isPresent(this.getError(errorCode, path));
+  }
+
+  get root(): AbstractControl {
+    let x: AbstractControl = this;
+
+    while (isPresent(x._parent)) {
+      x = x._parent;
+    }
+
+    return x;
   }
 
   /** @internal */

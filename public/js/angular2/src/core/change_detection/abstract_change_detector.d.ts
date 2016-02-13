@@ -7,7 +7,6 @@ import { Locals } from './parser/locals';
 import { ChangeDetectionStrategy, ChangeDetectorState } from './constants';
 export declare class AbstractChangeDetector<T> implements ChangeDetector {
     id: string;
-    dispatcher: ChangeDispatcher;
     numberOfPropertyProtoRecords: number;
     bindingTargets: BindingTarget[];
     directiveIndices: DirectiveIndex[];
@@ -22,26 +21,29 @@ export declare class AbstractChangeDetector<T> implements ChangeDetector {
     mode: ChangeDetectionStrategy;
     pipes: Pipes;
     propertyBindingIndex: number;
+    outputSubscriptions: any[];
     subscriptions: any[];
     streams: any[];
-    constructor(id: string, dispatcher: ChangeDispatcher, numberOfPropertyProtoRecords: number, bindingTargets: BindingTarget[], directiveIndices: DirectiveIndex[], strategy: ChangeDetectionStrategy);
+    dispatcher: ChangeDispatcher;
+    constructor(id: string, numberOfPropertyProtoRecords: number, bindingTargets: BindingTarget[], directiveIndices: DirectiveIndex[], strategy: ChangeDetectionStrategy);
     addContentChild(cd: ChangeDetector): void;
     removeContentChild(cd: ChangeDetector): void;
     addViewChild(cd: ChangeDetector): void;
     removeViewChild(cd: ChangeDetector): void;
     remove(): void;
-    handleEvent(eventName: string, elIndex: number, locals: Locals): boolean;
+    handleEvent(eventName: string, elIndex: number, event: any): boolean;
     handleEventInternal(eventName: string, elIndex: number, locals: Locals): boolean;
     detectChanges(): void;
     checkNoChanges(): void;
     runDetectChanges(throwOnChange: boolean): void;
     detectChangesInRecords(throwOnChange: boolean): void;
     detectChangesInRecordsInternal(throwOnChange: boolean): void;
-    hydrate(context: T, locals: Locals, directives: any, pipes: Pipes): void;
-    hydrateDirectives(directives: any): void;
+    hydrate(context: T, locals: Locals, dispatcher: ChangeDispatcher, pipes: Pipes): void;
+    hydrateDirectives(dispatcher: ChangeDispatcher): void;
     dehydrate(): void;
     dehydrateDirectives(destroyPipes: boolean): void;
     hydrated(): boolean;
+    destroyRecursive(): void;
     afterContentLifecycleCallbacks(): void;
     afterContentLifecycleCallbacksInternal(): void;
     afterViewLifecycleCallbacks(): void;
@@ -49,6 +51,7 @@ export declare class AbstractChangeDetector<T> implements ChangeDetector {
     markAsCheckOnce(): void;
     markPathToRootAsCheckOnce(): void;
     private _unsubsribeFromObservables();
+    private _unsubscribeFromOutputs();
     observeValue(value: any, index: number): any;
     observeDirective(value: any, index: number): any;
     observeComponent(value: any): any;
@@ -64,6 +67,6 @@ export declare class AbstractChangeDetector<T> implements ChangeDetector {
     };
     private _throwError(exception, stack);
     throwOnChangeError(oldValue: any, newValue: any): void;
-    throwDehydratedError(): void;
+    throwDehydratedError(detail: string): void;
     private _currentBinding();
 }

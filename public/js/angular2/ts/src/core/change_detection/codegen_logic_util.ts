@@ -103,7 +103,7 @@ export class CodegenLogicUtil {
         break;
 
       case RecordType.Chain:
-        rhs = 'null';
+        rhs = `${getLocalName(protoRec.args[protoRec.args.length - 1])}`;
         break;
 
       default:
@@ -153,19 +153,62 @@ export class CodegenLogicUtil {
 
   genHydrateDirectives(directiveRecords: DirectiveRecord[]): string {
     var res = [];
+    var outputCount = 0;
     for (var i = 0; i < directiveRecords.length; ++i) {
       var r = directiveRecords[i];
-      res.push(`${this._names.getDirectiveName(r.directiveIndex)} = ${this._genReadDirective(i)};`);
+      var dirVarName = this._names.getDirectiveName(r.directiveIndex);
+      res.push(`${dirVarName} = ${this._genReadDirective(i)};`);
+      if (isPresent(r.outputs)) {
+        r.outputs.forEach(output => {
+          var eventHandlerExpr = this._genEventHandler(r.directiveIndex.elementIndex, output[1]);
+          var statementStart =
+              `this.outputSubscriptions[${outputCount++}] = ${dirVarName}.${output[0]}`;
+          if (IS_DART) {
+            res.push(`${statementStart}.listen(${eventHandlerExpr});`);
+          } else {
+            res.push(`${statementStart}.subscribe({next: ${eventHandlerExpr}});`);
+          }
+        });
+      }
+    }
+    if (outputCount > 0) {
+      var statementStart = 'this.outputSubscriptions';
+      if (IS_DART) {
+        res.unshift(`${statementStart} = new List(${outputCount});`);
+      } else {
+        res.unshift(`${statementStart} = new Array(${outputCount});`);
+      }
     }
     return res.join("\n");
   }
 
+  genDirectivesOnDestroy(directiveRecords: DirectiveRecord[]): string {
+    var res = [];
+    for (var i = 0; i < directiveRecords.length; ++i) {
+      var r = directiveRecords[i];
+      if (r.callOnDestroy) {
+        var dirVarName = this._names.getDirectiveName(r.directiveIndex);
+        res.push(`${dirVarName}.ngOnDestroy();`);
+      }
+    }
+    return res.join("\n");
+  }
+
+  private _genEventHandler(boundElementIndex: number, eventName: string): string {
+    if (IS_DART) {
+      return `(event) => this.handleEvent('${eventName}', ${boundElementIndex}, event)`;
+    } else {
+      return `(function(event) { return this.handleEvent('${eventName}', ${boundElementIndex}, event); }).bind(this)`;
+    }
+  }
+
   private _genReadDirective(index: number) {
+    var directiveExpr = `this.getDirectiveFor(directives, ${index})`;
     // This is an experimental feature. Works only in Dart.
     if (this._changeDetection === ChangeDetectionStrategy.OnPushObserve) {
-      return `this.observeDirective(this.getDirectiveFor(directives, ${index}), ${index})`;
+      return `this.observeDirective(${directiveExpr}, ${index})`;
     } else {
-      return `this.getDirectiveFor(directives, ${index})`;
+      return directiveExpr;
     }
   }
 

@@ -11,12 +11,12 @@ var __exec;
   function preExec(loader, load) {
     if (callCounter++ == 0)
       curSystem = __global.System;
-    __global.System = loader;
+    __global.System = __global.SystemJS = loader;
     curLoad = load;
   }
   function postExec() {
     if (--callCounter == 0)
-      __global.System = curSystem;
+      __global.System = __global.SystemJS = curSystem;
     curLoad = undefined;
   }
 
@@ -34,19 +34,32 @@ var __exec;
 
   var hasBtoa = typeof btoa != 'undefined';
 
-  function getSource(load) {
+  // used to support leading #!/usr/bin/env in scripts as supported in Node
+  var hashBangRegEx = /^\#\!.*/;
+
+  function getSource(load, sourceMapOffset) {
     var lastLineIndex = load.source.lastIndexOf('\n');
 
     // wrap ES formats with a System closure for System global encapsulation
     var wrap = load.metadata.format == 'esm' || load.metadata.format == 'register' || load.metadata.bundle;
 
-    return (wrap ? '(function(System) {' : '') + load.source + (wrap ? '\n})(System);' : '')
+    var sourceMap = load.metadata.sourceMap;
+    if (sourceMap) {
+      if (typeof sourceMap != 'object')
+        throw new TypeError('load.metadata.sourceMap must be set to an object.');
+
+      if (sourceMapOffset && sourceMap.mappings)
+        sourceMap.mappings = ';' + sourceMap.mappings;
+    }
+    
+    sourceMap = JSON.stringify(sourceMap);
+
+    return (wrap ? '(function(System) {' : '') + (load.metadata.format == 'cjs' ? load.source.replace(hashBangRegEx, '') : load.source) + (wrap ? '\n})(System);' : '')
         // adds the sourceURL comment if not already present
         + (load.source.substr(lastLineIndex, 15) != '\n//# sourceURL=' 
-          ? '\n//# sourceURL=' + load.address + (load.metadata.sourceMap ? '!transpiled' : '') : '')
+          ? '\n//# sourceURL=' + load.address + (sourceMap ? '!transpiled' : '') : '')
         // add sourceMappingURL if load.metadata.sourceMap is set
-        + (load.metadata.sourceMap && hasBtoa && 
-          '\n//# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(load.metadata.sourceMap))) || '')
+        + (sourceMap && hasBtoa && '\n//# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(sourceMap))) || '');
   }
 
   function evalExec(load) {
@@ -54,7 +67,7 @@ var __exec;
       throw new TypeError('Subresource integrity checking is not supported in Web Workers or Chrome Extensions.');
     try {
       preExec(this, load);
-      new Function(getSource(load)).call(__global);
+      new Function(getSource(load, true)).call(__global);
       postExec();
     }
     catch(e) {
@@ -77,7 +90,7 @@ var __exec;
         head = document.head || document.body || document.documentElement;
 
       var script = document.createElement('script');
-      script.text = getSource(load);
+      script.text = getSource(load, false);
       var onerror = window.onerror;
       var e;
       window.onerror = function(_e) {
@@ -111,7 +124,7 @@ var __exec;
         throw new TypeError('Subresource integrity checking is unavailable in Node.');
       try {
         preExec(this, load);
-        vm.runInThisContext(getSource(load));
+        vm.runInThisContext(getSource(load, false));
         postExec();
       }
       catch(e) {

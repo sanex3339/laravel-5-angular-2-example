@@ -80,9 +80,7 @@ dist/system.src.js: lib/*.js $(ESML)/*.js
 				$(ESML)/transpiler.js \
 					lib/proto.js \
 					lib/global-eval.js \
-					lib/map.js \
 					lib/core.js \
-					lib/paths.js \
 					lib/package.js \
 					lib/scriptLoader.js \
 					lib/register.js \
@@ -90,6 +88,7 @@ dist/system.src.js: lib/*.js $(ESML)/*.js
 					lib/global.js \
 					lib/global-helpers.js \
 					lib/cjs.js \
+					lib/cjs-helpers.js \
 					lib/amd-helpers.js \
 					lib/amd.js \
 					lib/plugins.js \
@@ -112,14 +111,14 @@ dist/system-csp-production.src.js: lib/*.js $(ESML)/*.js
 				$(ESML)/loader.js \
 				$(ESML)/dynamic-only.js \
 				$(ESML)/system.js \
+				$(ESML)/system-fetch.js \
 					lib/proto.js \
-					lib/map.js \
 					lib/core.js \
-					lib/paths.js \
 					lib/package.js \
 					lib/scriptLoader.js \
 					lib/register.js \
 					lib/global-helpers.js \
+					lib/cjs-helpers.js \
 					lib/amd-helpers.js \
 					lib/plugins.js \
 					lib/conditionals.js \

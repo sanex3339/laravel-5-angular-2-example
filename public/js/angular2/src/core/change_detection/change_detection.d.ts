@@ -13,7 +13,7 @@ export { BindingRecord, BindingTarget } from './binding_record';
 export { DirectiveIndex, DirectiveRecord } from './directive_record';
 export { DynamicChangeDetector } from './dynamic_change_detector';
 export { ChangeDetectorRef } from './change_detector_ref';
-export { IterableDiffers, IterableDiffer, IterableDifferFactory } from './differs/iterable_differs';
+export { IterableDiffers, IterableDiffer, IterableDifferFactory, TrackByFn } from './differs/iterable_differs';
 export { KeyValueDiffers, KeyValueDiffer, KeyValueDifferFactory } from './differs/keyvalue_differs';
 export { PipeTransform } from './pipe_transform';
 export { WrappedValue, SimpleChange } from './change_detection_util';

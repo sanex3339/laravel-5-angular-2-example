@@ -18,7 +18,7 @@ const CHECKBOX_VALUE_ACCESSOR = CONST_EXPR(new Provider(
   selector:
       'input[type=checkbox][ngControl],input[type=checkbox][ngFormControl],input[type=checkbox][ngModel]',
   host: {'(change)': 'onChange($event.target.checked)', '(blur)': 'onTouched()'},
-  bindings: [CHECKBOX_VALUE_ACCESSOR]
+  providers: [CHECKBOX_VALUE_ACCESSOR]
 })
 export class CheckboxControlValueAccessor implements ControlValueAccessor {
   onChange = (_) => {};
@@ -27,7 +27,7 @@ export class CheckboxControlValueAccessor implements ControlValueAccessor {
   constructor(private _renderer: Renderer, private _elementRef: ElementRef) {}
 
   writeValue(value: any): void {
-    this._renderer.setElementProperty(this._elementRef, 'checked', value);
+    this._renderer.setElementProperty(this._elementRef.nativeElement, 'checked', value);
   }
   registerOnChange(fn: (_: any) => {}): void { this.onChange = fn; }
   registerOnTouched(fn: () => {}): void { this.onTouched = fn; }

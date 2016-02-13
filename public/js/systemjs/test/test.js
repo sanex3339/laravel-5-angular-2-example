@@ -269,7 +269,7 @@ asyncTest('AMD with dynamic require callback', function() {
 asyncTest('Loading an AMD bundle', function() {
   System.config({
     bundles: {
-      'tests/amd-bundle.js': ['bundle-1', 'bundle-2']
+      'tests/amd-bundle.js': ['bundle-*']
     }
   });
   System['import']('bundle-1').then(function(m) {
@@ -368,6 +368,7 @@ asyncTest('CommonJS require variations', function() {
     ok(m.d4 == "text/* require('still not a dep') text");
     ok(m.d5 == 'text \'quote\' require("yet still not a dep")');
     ok(m.d6 == 'd6');
+    ok(m.d7 == 'export');
     start();
   }, err);
 });
@@ -509,6 +510,20 @@ asyncTest('System.register Circular', function() {
 asyncTest('System.register regex test', function() {
   System['import']('tests/register-regex.js').then(function(m) {
     ok(m);
+    start();
+  }, err);
+});
+
+asyncTest('System.register regex test 2', function() {
+  System['import']('tests/register-regex-2.js').then(function(m) {
+    ok(m);
+    start();
+  }, err);
+});
+
+asyncTest('System.register module name arg', function() {
+  System['import']('tests/module-name.js').then(function(m) {
+    ok(m.name == System.baseURL + 'tests/module-name.js');
     start();
   }, err);
 });
@@ -814,7 +829,6 @@ asyncTest('Loading two bundles that have a shared dependency', function() {
 asyncTest("System clone", function() {
   var clonedSystem = new System.constructor();
 
-  clonedSystem.paths['*'] = System.paths['*'];
   clonedSystem.baseURL = System.baseURL;
 
   System.map['maptest'] = 'tests/map-test.js';
@@ -909,7 +923,7 @@ asyncTest('Package configuration CommonJS config example', function() {
       'global-test': 'tests/testpkg/test.ts'
     },
     //packageConfigPaths: ['tests/testpk*.json'],
-    packageConfigPaths: ['tests/testpkg/system.json', 'tests/testpkg/depcache.json'],
+    packageConfigPaths: ['tests/testpkg/system.json'],
     packages: {
       'tests/testpkg': {
         main: './noext',
@@ -1099,5 +1113,97 @@ if (typeof process != 'undefined') {
     start();
   });
 }
+  
+asyncTest('Package-local alias esm', function() {
+  System.config({
+    map: {
+      'package-local-alias-esm': 'tests/package-local-alias'
+    },
+    packages: {
+      'package-local-alias-esm': {
+        main: 'index-esm.js',
+        format: 'esm',
+        meta: {
+          './local-esm': {alias: './local/index-esm.js'}
+        }
+      }
+    }
+  });
+  System['import']('package-local-alias-esm').then(function(m) {
+    ok(m.q == 'q');
+    ok(m.fromLocal == 'x');
+    start();
+  });
+});
+
+asyncTest('Package-local alias cjs', function() {
+  System.config({
+    map: {
+      'package-local-alias-cjs': 'tests/package-local-alias'
+    },
+    packages: {
+      'package-local-alias-cjs': {
+        main: 'index-cjs.js',
+        format: 'cjs',
+        meta: {
+          './local-cjs': {alias: './local/index-cjs.js'}
+        }
+      }
+    }
+  });
+  System['import']('package-local-alias-cjs').then(function(m) {
+    ok(m.q == 'q');
+    ok(m.fromLocal == 'x');
+    start();
+  });
+});
+  
+asyncTest('Package-local alias esm default export', function() {
+  System.config({
+    map: {
+      'package-local-alias-default-esm': 'tests/package-local-alias'
+    },
+    packages: {
+      'package-local-alias-default-esm': {  // can't reuse package names from previous test
+        main: 'index-default-esm.js',   // because System.config() results persist across tests
+        format: 'esm',
+        meta: {
+          './local-default-esm': {alias: './local/index-default-esm.js'}
+        }
+      }
+    }
+  });
+  System['import']('package-local-alias-default-esm').then(function(m) {
+    ok(m.q == 'q');
+    ok(m.fromLocal == 'x');
+    ok(m.fromLocalDirect == 'x');
+    start();
+  });
+});
+
+asyncTest('Package-local alias cjs default export', function() {
+  System.config({
+    map: {
+      'package-local-alias-default-cjs': 'tests/package-local-alias'
+    },
+    packages: {
+      'package-local-alias-default-cjs': {
+        main: 'index-default-cjs.js',
+        format: 'cjs',
+        meta: {
+          './local-default-cjs': {alias: './local/index-default-cjs.js'}
+        }
+      }
+    }
+  });
+  System['import']('package-local-alias-default-cjs').then(function(m) {
+    ok(m.q == 'q');
+    ok(m.fromLocal == 'x'); 
+    ok(m.fromLocalDirect == 'x');
+    start();
+  });
+});
+
+
 
 })(typeof window == 'undefined' ? global : window);

@@ -1,5 +1,6 @@
+import { ZoneLike } from 'angular2/src/facade/lang';
 import { EventEmitter } from 'angular2/src/facade/async';
-export interface NgZoneZone extends Zone {
+export interface NgZoneZone extends ZoneLike {
 }
 /**
  * Interface for a function with zero arguments.
@@ -167,7 +168,7 @@ export declare class NgZone {
      */
     hasPendingTimers: boolean;
     /**
-     * Whether there are any outstanding asychnronous tasks of any kind that are
+     * Whether there are any outstanding asynchronous tasks of any kind that are
      * scheduled to run within Angular zone.
      *
      * Useful as a signal of UI stability. For example, when a test reaches a

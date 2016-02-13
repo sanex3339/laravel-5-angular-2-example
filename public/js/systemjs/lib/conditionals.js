@@ -5,7 +5,7 @@
  *
  *     import $ from 'jquery/#{browser}';
  *
- *   Will first load the module 'browser' via `System.import('browser')` and 
+ *   Will first load the module 'browser' via `SystemJS.import('browser')` and 
  *   take the default export of that module.
  *   If the default export is not a string, an error is thrown.
  * 
@@ -128,19 +128,7 @@
     });
   }
 
-  hookConstructor(function(constructor) {
-    return function() {
-      constructor.call(this);
-
-      // standard environment module, starting small as backwards-compat matters!
-      this.set('@system-env', this.newModule({
-        browser: isBrowser,
-        node: !!this._nodeRequire
-      }));
-    };
-  });
-
-  // no normalizeSync
+  // normalizeSync does not parse conditionals at all although it could
   hook('normalize', function(normalize) {
     return function(name, parentName, parentAddress) {
       var loader = this;

@@ -4,12 +4,12 @@
 (function() {
   // CJS Module Format
   // require('...') || exports[''] = ... || exports.asd = ... || module.exports = ...
-  var cjsExportsRegEx = /(?:^\uFEFF?|[^$_a-zA-Z\xA0-\uFFFF.]|module\.)exports\s*(\[['"]|\.)|(?:^\uFEFF?|[^$_a-zA-Z\xA0-\uFFFF.])module\.exports\s*[=,]/;
+  var cjsExportsRegEx = /(?:^\uFEFF?|[^$_a-zA-Z\xA0-\uFFFF.])(exports\s*(\[['"]|\.)|module(\.exports|\['exports'\]|\["exports"\])\s*(\[['"]|[=,\.]))/;
   // RegEx adjusted from https://github.com/jbrantly/yabble/blob/master/lib/yabble.js#L339
   var cjsRequireRegEx = /(?:^\uFEFF?|[^$_a-zA-Z\xA0-\uFFFF."'])require\s*\(\s*("[^"\\]*(?:\\.[^"\\]*)*"|'[^'\\]*(?:\\.[^'\\]*)*')\s*\)/g;
   var commentRegEx = /(^|[^\\])(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/mg;
 
-  var stringRegEx = /(?:"[^"\\\n\r]*(?:\\.[^"\\\n\r]*)*"|'[^'\\\n\r]*(?:\\.[^'\\\n\r]*)*')/g;
+  var stringRegEx = /("[^"\\\n\r]*(\\.[^"\\\n\r]*)*"|'[^'\\\n\r]*(\\.[^'\\\n\r]*)*')/g;
 
   function getCJSDeps(source) {
     cjsRequireRegEx.lastIndex = commentRegEx.lastIndex = stringRegEx.lastIndex = 0;
@@ -21,10 +21,9 @@
     // track string and comment locations for unminified source    
     var stringLocations = [], commentLocations = [];
 
-    function inLocation(locations, match, starts) {
-      var inLocation = false;
+    function inLocation(locations, match) {
       for (var i = 0; i < locations.length; i++)
-        if (locations[i][0] < match.index && locations[i][1] > match.index + (!starts ? match[0].length : 0))
+        if (locations[i][0] < match.index && locations[i][1] > match.index)
           return true;
       return false;
     }
@@ -35,44 +34,27 @@
       
       while (match = commentRegEx.exec(source)) {
         // only track comments not starting in strings
-        if (!inLocation(stringLocations, match, true))
+        if (!inLocation(stringLocations, match))
           commentLocations.push([match.index, match.index + match[0].length]);
       }
     }
 
     while (match = cjsRequireRegEx.exec(source)) {
       // ensure we're not within a string or comment location
-      if (!inLocation(stringLocations, match) && !inLocation(commentLocations, match))
-        deps.push(match[1].substr(1, match[1].length - 2));
+      if (!inLocation(stringLocations, match) && !inLocation(commentLocations, match)) {
+        var dep = match[1].substr(1, match[1].length - 2);
+        // skip cases like require('" + file + "')
+        if (dep.match(/"|'/))
+          continue;
+        // trailing slash requires are removed as they don't map mains in SystemJS
+        if (dep[dep.length - 1] == '/')
+          dep = dep.substr(0, dep.length - 1);
+        deps.push(dep);
+      }
     }
 
     return deps;
   }
-
-  if (typeof window != 'undefined' && typeof document != 'undefined' && window.location)
-    var windowOrigin = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port : '');
-
-  // include the node require since we're overriding it
-  if (typeof require != 'undefined' && require.resolve && typeof process != 'undefined')
-    SystemJSLoader.prototype._nodeRequire = require;
-
-  var nodeCoreModules = ['assert', 'buffer', 'child_process', 'cluster', 'console', 'constants', 
-      'crypto', 'dgram', 'dns', 'domain', 'events', 'fs', 'http', 'https', 'module', 'net', 'os', 'path', 
-      'process', 'punycode', 'querystring', 'readline', 'repl', 'stream', 'string_decoder', 'sys', 'timers', 
-      'tls', 'tty', 'url', 'util', 'vm', 'zlib'];
-
-  hook('normalize', function(normalize) {
-    return function(name, parentName) {
-      // dynamically load node-core modules when requiring `@node/fs` for example
-      if (name.substr(0, 6) == '@node/' && nodeCoreModules.indexOf(name.substr(6)) != -1) {
-        if (!this._nodeRequire)
-          throw new TypeError('Can only load node core modules in Node.');
-        this.set(name, this.newModule(getESModule(this._nodeRequire(name.substr(6)))));
-      }
-
-      return normalize.apply(this, arguments);
-    };
-  });
 
   hook('instantiate', function(instantiate) {
     return function(load) {
@@ -86,10 +68,11 @@
 
       if (load.metadata.format == 'cjs') {
         var metaDeps = load.metadata.deps;
-        var deps = getCJSDeps(load.source);
+        var deps = load.metadata.cjsRequireDetection === false ? [] : getCJSDeps(load.source);
 
         for (var g in load.metadata.globals)
-          deps.push(load.metadata.globals[g]);
+          if (load.metadata.globals[g])
+            deps.push(load.metadata.globals[g]);
 
         var entry = createEntry();
 
@@ -97,38 +80,26 @@
 
         entry.deps = deps;
         entry.executingRequire = true;
-        entry.execute = function(require, exports, module) {
+        entry.execute = function(_require, exports, module) {
+          function require(name) {
+            if (name[name.length - 1] == '/')
+              name = name.substr(0, name.length - 1);
+            return _require.apply(this, arguments);
+          }
+
           // ensure meta deps execute first
           for (var i = 0; i < metaDeps.length; i++)
             require(metaDeps[i]);
-          var address = load.address || '';
-
-          var dirname = address.split('/');
-          dirname.pop();
-          dirname = dirname.join('/');
-
-          if (address.substr(0, 8) == 'file:///') {
-            address = address.substr(7);
-            dirname = dirname.substr(7);
-
-            // on windows remove leading '/'
-            if (isWindows) {
-              address = address.substr(1);
-              dirname = dirname.substr(1);
-            }
-          }
-          else if (windowOrigin && address.substr(0, windowOrigin.length) === windowOrigin) {
-            address = address.substr(windowOrigin.length);
-            dirname = dirname.substr(windowOrigin.length);
-          }
 
           // disable AMD detection
           var define = __global.define;
           __global.define = undefined;
 
+          var pathVars = loader.get('@@cjs-helpers').getPathVars(module.id);
+
           __global.__cjsWrapper = {
             exports: exports,
-            args: [require, exports, module, address, dirname, __global, __global]
+            args: [require, exports, module, pathVars.filename, pathVars.dirname, __global, __global]
           };
 
           var globals = '';

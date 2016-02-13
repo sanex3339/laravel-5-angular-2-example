@@ -1,3 +1,33 @@
+export interface ZoneLike {
+    fork(locals?: any): ZoneLike;
+    run(fn: any, applyTo?: any, applyWith?: any): any;
+}
+export interface ZoneLikeConstructor {
+    longStackTraceZone: {
+        [key: string]: any;
+    };
+}
+export interface BrowserNodeGlobal {
+    Object: typeof Object;
+    Array: typeof Array;
+    Map: typeof Map;
+    Set: typeof Set;
+    Date: DateConstructor;
+    RegExp: RegExpConstructor;
+    JSON: typeof JSON;
+    Math: any;
+    assert(condition: any): void;
+    Reflect: any;
+    zone: ZoneLike;
+    Zone: ZoneLikeConstructor;
+    getAngularTestability: Function;
+    getAllAngularTestabilities: Function;
+    frameworkStabilizers: Array<Function>;
+    setTimeout: Function;
+    clearTimeout: Function;
+    setInterval: Function;
+    clearInterval: Function;
+}
 export declare const IS_DART: boolean;
 declare var _global: BrowserNodeGlobal;
 export { _global as global };
@@ -17,7 +47,7 @@ export interface ConcreteType extends Type {
     new (...args: any[]): any;
 }
 export declare function getTypeNameForDebugging(type: Type): string;
-export declare var Math: Math;
+export declare var Math: any;
 export declare var Date: DateConstructor;
 export declare function lockMode(): void;
 /**
@@ -121,3 +151,8 @@ export declare class DateWrapper {
 }
 export declare function setValueOnPath(global: any, path: string, value: any): void;
 export declare function getSymbolIterator(): string | symbol;
+export declare function evalExpression(sourceUrl: string, expr: string, declarations: string, vars: {
+    [key: string]: any;
+}): any;
+export declare function isPrimitive(obj: any): boolean;
+export declare function hasConstructor(value: Object, type: Type): boolean;

@@ -3,7 +3,7 @@ import { OpaqueToken } from 'angular2/core';
 /**
  * `LocationStrategy` is responsible for representing and reading route state
  * from the browser's URL. Angular provides two strategies:
- * {@link HashLocationStrategy} (default) and {@link PathLocationStrategy}.
+ * {@link HashLocationStrategy} and {@link PathLocationStrategy} (default).
  *
  * This is used under the hood of the {@link Location} service.
  *
@@ -42,7 +42,6 @@ export class LocationStrategy {
  *
  * bootstrap(AppCmp, [
  *   ROUTER_PROVIDERS,
- *   PathLocationStrategy,
  *   provide(APP_BASE_HREF, {useValue: '/my/app'})
  * ]);
  * ```

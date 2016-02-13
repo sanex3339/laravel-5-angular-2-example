@@ -7,6 +7,7 @@ export { NgFormModel } from './directives/ng_form_model';
 export { NgForm } from './directives/ng_form';
 export { DefaultValueAccessor } from './directives/default_value_accessor';
 export { CheckboxControlValueAccessor } from './directives/checkbox_value_accessor';
+export { RadioControlValueAccessor, RadioButtonState } from './directives/radio_control_value_accessor';
 export { NumberValueAccessor } from './directives/number_value_accessor';
 export { NgControlStatus } from './directives/ng_control_status';
 export { SelectControlValueAccessor, NgSelectOption } from './directives/select_control_value_accessor';

@@ -63,7 +63,11 @@ hookConstructor(function(constructor) {
 
       // commonjs require
       else if (typeof names == 'string') {
-        var module = loader.get(loader.normalizeSync(names, referer));
+        var defaultJSExtension = loader.defaultJSExtensions && names.substr(names.length - 3, 3) != '.js';
+        var normalized = loader.decanonicalize(names, referer);
+        if (defaultJSExtension && normalized.substr(normalized.length - 3, 3) == '.js')
+          normalized = normalized.substr(0, normalized.length - 3);
+        var module = loader.get(normalized);
         if (!module)
           throw new Error('Module not already loaded loading "' + names + '" from "' + referer + '".');
         return module.__useDefault ? module['default'] : module;
@@ -137,7 +141,7 @@ hookConstructor(function(constructor) {
           contextualRequire.toUrl = function(name) {
             // normalize without defaultJSExtensions
             var defaultJSExtension = loader.defaultJSExtensions && name.substr(name.length - 3, 3) != '.js';
-            var url = loader.normalizeSync(name, module.id);
+            var url = loader.decanonicalize(name, module.id);
             if (defaultJSExtension && url.substr(url.length - 3, 3) == '.js')
               url = url.substr(0, url.length - 3);
             return url;
@@ -161,7 +165,7 @@ hookConstructor(function(constructor) {
       }
 
       var entry = createEntry();
-      entry.name = name && (loader.normalizeSync || loader.normalize).call(loader, name);
+      entry.name = name && (loader.decanonicalize || loader.normalize).call(loader, name);
       entry.deps = deps;
       entry.execute = execute;
 

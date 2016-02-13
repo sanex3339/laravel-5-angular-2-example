@@ -1,6 +1,6 @@
 {
   "name": "angular2",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.6",
   "description": "Angular 2 - a web framework for modern web apps",
   "homepage": "https://github.com/angular/angular",
   "bugs": {
@@ -48,7 +48,7 @@
       "email": "jelbourn@google.com"
     }
   ],
-  "license": "Apache-2.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/angular/angular.git"
@@ -59,22 +59,22 @@
     "es6-shim": "^0.33.3",
     "reflect-metadata": "0.1.2",
     "rxjs": "5.0.0-beta.0",
-    "zone.js": "0.5.10"
+    "zone.js": "0.5.14"
   },
-  "_id": "angular2@2.0.0-beta.0",
+  "_id": "angular2@2.0.0-beta.6",
   "scripts": {},
-  "_shasum": "97413fabc1eaf1547a081ba3ad4c61732db54837",
-  "_from": "angular2@2.0.0-beta.0",
-  "_resolved": "https://registry.npmjs.org/angular2/-/angular2-2.0.0-beta.0.tgz",
-  "_npmVersion": "2.14.7",
-  "_nodeVersion": "4.2.1",
+  "_shasum": "8e47d91e146a5b70c5f71483301727a1163d38ef",
+  "_from": "angular2@2.0.0-beta.6",
+  "_resolved": "https://registry.npmjs.org/angular2/-/angular2-2.0.0-beta.6.tgz",
+  "_npmVersion": "3.6.0",
+  "_nodeVersion": "5.5.0",
   "_npmUser": {
     "name": "angularcore",
     "email": "angular-core+npm@google.com"
   },
   "dist": {
-    "shasum": "97413fabc1eaf1547a081ba3ad4c61732db54837",
-    "tarball": "http://registry.npmjs.org/angular2/-/angular2-2.0.0-beta.0.tgz"
+    "shasum": "8e47d91e146a5b70c5f71483301727a1163d38ef",
+    "tarball": "http://registry.npmjs.org/angular2/-/angular2-2.0.0-beta.6.tgz"
   },
   "maintainers": [
     {
@@ -82,5 +82,10 @@
       "email": "angular-core+npm@google.com"
     }
   ],
-  "directories": {}
+  "_npmOperationalInternal": {
+    "host": "packages-5-east.internal.npmjs.com",
+    "tmp": "tmp/angular2-2.0.0-beta.6.tgz_1455235571942_0.1402145295869559"
+  },
+  "directories": {},
+  "readme": "ERROR: No README data found!"
 }

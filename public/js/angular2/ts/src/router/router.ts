@@ -95,8 +95,6 @@ export class Router {
       throw new BaseException(`registerAuxOutlet expects to be called with an outlet with a name.`);
     }
 
-    // TODO...
-    // what is the host of an aux route???
     var router = this.auxRouter(this.hostComponent);
 
     this._auxRouters.set(outletName, router);
@@ -204,12 +202,12 @@ export class Router {
     return this._settleInstruction(instruction)
         .then((_) => this._routerCanReuse(instruction))
         .then((_) => this._canActivate(instruction))
-        .then((result) => {
+        .then((result: boolean) => {
           if (!result) {
             return false;
           }
           return this._routerCanDeactivate(instruction)
-              .then((result) => {
+              .then((result: boolean) => {
                 if (result) {
                   return this.commit(instruction, _skipLocationChange)
                       .then((_) => {
@@ -224,9 +222,11 @@ export class Router {
   /** @internal */
   _settleInstruction(instruction: Instruction): Promise<any> {
     return instruction.resolveComponent().then((_) => {
-      instruction.component.reuse = false;
-
       var unsettledInstructions: Array<Promise<any>> = [];
+
+      if (isPresent(instruction.component)) {
+        instruction.component.reuse = false;
+      }
 
       if (isPresent(instruction.child)) {
         unsettledInstructions.push(this._settleInstruction(instruction.child));
@@ -256,6 +256,9 @@ export class Router {
     if (isBlank(this._outlet)) {
       return _resolveToFalse;
     }
+    if (isBlank(instruction.component)) {
+      return _resolveToTrue;
+    }
     return this._outlet.routerCanReuse(instruction.component)
         .then((result) => {
           instruction.component.reuse = result;
@@ -280,7 +283,7 @@ export class Router {
     if (isPresent(instruction)) {
       childInstruction = instruction.child;
       componentInstruction = instruction.component;
-      reuse = instruction.component.reuse;
+      reuse = isBlank(instruction.component) || instruction.component.reuse;
     }
     if (reuse) {
       next = _resolveToTrue;
@@ -304,8 +307,9 @@ export class Router {
    */
   commit(instruction: Instruction, _skipLocationChange: boolean = false): Promise<any> {
     this._currentInstruction = instruction;
+
     var next: Promise<any> = _resolveToTrue;
-    if (isPresent(this._outlet)) {
+    if (isPresent(this._outlet) && isPresent(instruction.component)) {
       var componentInstruction = instruction.component;
       if (componentInstruction.reuse) {
         next = this._outlet.reuse(componentInstruction);
@@ -381,15 +385,12 @@ export class Router {
   }
 
   private _getAncestorInstructions(): Instruction[] {
-    var ancestorComponents = [];
+    var ancestorInstructions = [this._currentInstruction];
     var ancestorRouter: Router = this;
-    while (isPresent(ancestorRouter.parent) &&
-           isPresent(ancestorRouter.parent._currentInstruction)) {
-      ancestorRouter = ancestorRouter.parent;
-      ancestorComponents.unshift(ancestorRouter._currentInstruction);
+    while (isPresent(ancestorRouter = ancestorRouter.parent)) {
+      ancestorInstructions.unshift(ancestorRouter._currentInstruction);
     }
-
-    return ancestorComponents;
+    return ancestorInstructions;
   }
 
 
@@ -437,7 +438,7 @@ export class RootRouter extends Router {
                   }
                   var emitPath = instruction.toUrlPath();
                   var emitQuery = instruction.toUrlQuery();
-                  if (emitPath.length > 0) {
+                  if (emitPath.length > 0 && emitPath[0] != '/') {
                     emitPath = '/' + emitPath;
                   }
 
@@ -464,7 +465,7 @@ export class RootRouter extends Router {
   commit(instruction: Instruction, _skipLocationChange: boolean = false): Promise<any> {
     var emitPath = instruction.toUrlPath();
     var emitQuery = instruction.toUrlQuery();
-    if (emitPath.length > 0) {
+    if (emitPath.length > 0 && emitPath[0] != '/') {
       emitPath = '/' + emitPath;
     }
     var promise = super.commit(instruction);
@@ -505,6 +506,9 @@ class ChildRouter extends Router {
 function canActivateOne(nextInstruction: Instruction,
                         prevInstruction: Instruction): Promise<boolean> {
   var next = _resolveToTrue;
+  if (isBlank(nextInstruction.component)) {
+    return next;
+  }
   if (isPresent(nextInstruction.child)) {
     next = canActivateOne(nextInstruction.child,
                           isPresent(prevInstruction) ? prevInstruction.child : null);

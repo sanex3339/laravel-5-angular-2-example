@@ -8,7 +8,7 @@ export declare const VALID: string;
  */
 export declare const INVALID: string;
 /**
- * Indicates that a Control is pending, i.e. that async validation is occuring and
+ * Indicates that a Control is pending, i.e. that async validation is occurring and
  * errors are not yet available for the input value.
  */
 export declare const PENDING: string;
@@ -90,6 +90,7 @@ export declare abstract class AbstractControl {
     find(path: Array<string | number> | string): AbstractControl;
     getError(errorCode: string, path?: string[]): any;
     hasError(errorCode: string, path?: string[]): boolean;
+    root: AbstractControl;
     private _calculateStatus();
 }
 /**

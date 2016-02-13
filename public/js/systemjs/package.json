@@ -1,6 +1,6 @@
 {
   "name": "systemjs",
-  "version": "0.19.6",
+  "version": "0.19.20",
   "description": "Universal dynamic module loader",
   "repository": {
     "type": "git",
@@ -11,13 +11,13 @@
   },
   "license": "MIT",
   "dependencies": {
-    "es6-module-loader": "^0.17.4",
-    "when": "^3.7.2"
+    "es6-module-loader": "^0.17.10",
+    "when": "^3.7.5"
   },
   "devDependencies": {
     "babel-core": "^5.8.22",
     "qunit": "^0.6.2",
-    "traceur": "0.0.91",
+    "traceur": "0.0.102",
     "typescript": "^1.6.2",
     "uglify-js": "~2.4.23"
   },
@@ -29,23 +29,23 @@
     "test:traceur": "qunit -c s:./index.js -t ./test/test-traceur.js",
     "test:typescript": "qunit -c s:./index.js -t ./test/test-typescript.js"
   },
-  "gitHead": "f2586c0b3f4658f165fa9d1284c12b2132de1092",
+  "gitHead": "19942209d2454686c93d9a696452322fc82ac4d0",
   "bugs": {
     "url": "https://github.com/systemjs/systemjs/issues"
   },
   "homepage": "https://github.com/systemjs/systemjs#readme",
-  "_id": "systemjs@0.19.6",
-  "_shasum": "64307481ed1dd6c07c1f1e2367af72c99e98e347",
-  "_from": "systemjs@0.19.6",
-  "_npmVersion": "3.3.8",
-  "_nodeVersion": "4.1.2",
+  "_id": "systemjs@0.19.20",
+  "_shasum": "b46605a985997e06fff62ecc67b6eb0909accc9a",
+  "_from": "systemjs@>=0.19.6 <0.20.0",
+  "_npmVersion": "2.14.15",
+  "_nodeVersion": "5.1.1",
   "_npmUser": {
     "name": "guybedford",
     "email": "guybedford@gmail.com"
   },
   "dist": {
-    "shasum": "64307481ed1dd6c07c1f1e2367af72c99e98e347",
-    "tarball": "http://registry.npmjs.org/systemjs/-/systemjs-0.19.6.tgz"
+    "shasum": "b46605a985997e06fff62ecc67b6eb0909accc9a",
+    "tarball": "http://registry.npmjs.org/systemjs/-/systemjs-0.19.20.tgz"
   },
   "maintainers": [
     {
@@ -53,6 +53,11 @@
       "email": "guybedford@gmail.com"
     }
   ],
+  "_npmOperationalInternal": {
+    "host": "packages-9-west.internal.npmjs.com",
+    "tmp": "tmp/systemjs-0.19.20.tgz_1454612891836_0.14591855183243752"
+  },
   "directories": {},
-  "_resolved": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.6.tgz"
+  "_resolved": "https://registry.npmjs.org/systemjs/-/systemjs-0.19.20.tgz",
+  "readme": "ERROR: No README data found!"
 }

@@ -176,7 +176,7 @@ export function serializeParams(paramMap) {
     var params = [];
     if (isPresent(paramMap)) {
         StringMapWrapper.forEach(paramMap, (value, key) => {
-            if (value == true) {
+            if (value === true) {
                 params.push(key);
             }
             else {

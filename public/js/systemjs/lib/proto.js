@@ -12,6 +12,9 @@ SystemProto.prototype = SystemLoader.prototype;
 SystemJSLoader.prototype = new SystemProto();
 SystemJSLoader.prototype.constructor = SystemJSLoader;
 
+// remove ESML instantiate
+SystemJSLoader.prototype.instantiate = function() {};
+
 var systemJSConstructor;
 
 function hook(name, hook) {
@@ -53,7 +56,7 @@ catch(e) {
   getOwnPropertyDescriptor = false;
 }
 
-// converts any module.exports object into an object ready for System.newModule
+// converts any module.exports object into an object ready for SystemJS.newModule
 function getESModule(exports) {
   var esModule = {};
   // don't trigger getters/setters in environments that support them
@@ -88,7 +91,7 @@ function extend(a, b, prepend) {
 }
 
 // package configuration options
-var packageProperties = ['main', 'format', 'defaultExtension', 'modules', 'map', 'basePath', 'depCache'];
+var packageProperties = ['main', 'format', 'defaultExtension', 'meta', 'map', 'basePath', 'depCache'];
 
 // meta first-level extends where:
 // array + array appends
@@ -101,7 +104,7 @@ function extendMeta(a, b, prepend) {
       a[p] = val;
     else if (val instanceof Array && a[p] instanceof Array)
       a[p] = [].concat(prepend ? val : a[p]).concat(prepend ? a[p] : val);
-    else if (typeof val == 'object' && typeof a[p] == 'object')
+    else if (typeof val == 'object' && val !== null && typeof a[p] == 'object')
       a[p] = extend(extend({}, a[p]), val, prepend);
     else if (!prepend)
       a[p] = val;

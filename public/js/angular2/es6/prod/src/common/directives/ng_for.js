@@ -68,7 +68,7 @@ export let NgFor = class {
     set ngForOf(value) {
         this._ngForOf = value;
         if (isBlank(this._differ) && isPresent(value)) {
-            this._differ = this._iterableDiffers.find(value).create(this._cdr);
+            this._differ = this._iterableDiffers.find(value).create(this._cdr, this._ngForTrackBy);
         }
     }
     set ngForTemplate(value) {
@@ -76,6 +76,7 @@ export let NgFor = class {
             this._templateRef = value;
         }
     }
+    set ngForTrackBy(value) { this._ngForTrackBy = value; }
     ngDoCheck() {
         if (isPresent(this._differ)) {
             var changes = this._differ.diff(this._ngForOf);
@@ -96,8 +97,13 @@ export let NgFor = class {
             this._perViewChange(insertTuples[i].view, insertTuples[i].record);
         }
         for (var i = 0, ilen = this._viewContainer.length; i < ilen; i++) {
-            this._viewContainer.get(i).setLocal('last', i === ilen - 1);
+            var viewRef = this._viewContainer.get(i);
+            viewRef.setLocal('last', i === ilen - 1);
         }
+        changes.forEachIdentityChange((record) => {
+            var viewRef = this._viewContainer.get(record.currentIndex);
+            viewRef.setLocal('\$implicit', record.item);
+        });
     }
     _perViewChange(view, record) {
         view.setLocal('\$implicit', record.item);
@@ -137,7 +143,7 @@ export let NgFor = class {
     }
 };
 NgFor = __decorate([
-    Directive({ selector: '[ngFor][ngForOf]', inputs: ['ngForOf', 'ngForTemplate'] }), 
+    Directive({ selector: '[ngFor][ngForOf]', inputs: ['ngForTrackBy', 'ngForOf', 'ngForTemplate'] }), 
     __metadata('design:paramtypes', [ViewContainerRef, TemplateRef, IterableDiffers, ChangeDetectorRef])
 ], NgFor);
 class RecordViewTuple {

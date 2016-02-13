@@ -11,7 +11,7 @@ Universal dynamic module loader - loads ES6 modules, AMD, CommonJS and global sc
 
 * [Loads any module format](docs/module-formats.md) with [exact circular reference and binding support](https://github.com/ModuleLoader/es6-module-loader/blob/v0.17.0/docs/circular-references-bindings.md).
 * Loads [ES6 modules compiled into the `System.register` bundle format for production](docs/production-workflows.md), maintaining circular references support.
-* Supports RequireJS-style [map](docs/overview.md#map-config), [paths](docs/overview.md#paths-config), [bundles](docs/production-workflows.md#bundle-extension) and [global shims](docs/module-formats.md#shim-dependencies).
+* Supports RequireJS-style [map](docs/overview.md#map-config), [paths](https://github.com/ModuleLoader/es6-module-loader/blob/master/docs/loader-config.md#paths-implementation), [bundles](docs/production-workflows.md#bundle-extension) and [global shims](docs/module-formats.md#shim-dependencies).
 * [Loader plugins](docs/overview.md#plugin-loaders) allow loading assets through the module naming system such as CSS, JSON or images.
 
 Built on top of the [ES6 Module Loader polyfill](https://github.com/ModuleLoader/es6-module-loader).
@@ -114,7 +114,7 @@ System.import('./app.js').then(function(m) {
 
 If using TypeScript, set `global.ts = require('typescript')` before importing to ensure it is loaded correctly.
 
-If you are using jspm as a package manager you will also need to load the generated `config.js`. The best way to do this in node is to get your `System` instance through jspm, which wil automatically load your config correctly for you:
+If you are using jspm as a package manager you will also need to load the generated `config.js`. The best way to do this in node is to get your `System` instance through jspm, which will automatically load your config correctly for you:
 
 ```js
 var System = require('jspm').Loader();
@@ -137,6 +137,7 @@ Additional Plugins:
 
 * [Audio](https://github.com/ozsay/plugin-audio) `System.import('./beep.mp3!audio')`
 * [CoffeeScript](https://github.com/forresto/plugin-coffee) `System.import('./test.coffee')`
+* [Image (lazy)](https://github.com/laurentgoudet/plugin-lazyimage) Async plugin-image
 * [Jade](https://github.com/johnsoftek/plugin-jade)
 * [Jade VirtualDOM](https://github.com/WorldMaker/system-jade-virtualdom)
 * [JSX](https://github.com/floatdrop/plugin-jsx) `System.import('template.jsx')`
@@ -147,9 +148,14 @@ Additional Plugins:
 * [raw](https://github.com/matthewbauer/plugin-raw) `System.import('file.bin!raw').then(function(data) {})`
 * [jst](https://github.com/podio/plugin-jst) Underscore templates
 * [SASS](https://github.com/screendriver/plugin-sass) `System.import('style.scss!')`
+* [SVG](https://github.com/vuzonp/systemjs-plugin-svg)
+* [HTML](https://github.com/Hypercubed/systemjs-plugin-html/) HTML imports
+* [YAML](https://github.com/tb/plugin-yaml)
 
-[Read about using plugins here](docs/overview.md#plugin-loaders)
-[Read the guide here on creating plugins](docs/creating-plugins.md).
+Guides:
+
+* [Using plugins](docs/overview.md#plugin-loaders)
+* [Creating plugins](docs/creating-plugins.md)
 
 #### Running the tests
 

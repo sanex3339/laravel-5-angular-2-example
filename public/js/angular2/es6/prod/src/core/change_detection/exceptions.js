@@ -83,7 +83,27 @@ export class ChangeDetectionError extends WrappedException {
  * This is an internal Angular error.
  */
 export class DehydratedException extends BaseException {
-    constructor() {
-        super('Attempt to detect changes on a dehydrated detector.');
+    constructor(details) {
+        super(`Attempt to use a dehydrated detector: ${details}`);
+    }
+}
+/**
+ * Wraps an exception thrown by an event handler.
+ */
+export class EventEvaluationError extends WrappedException {
+    constructor(eventName, originalException, originalStack, context) {
+        super(`Error during evaluation of "${eventName}"`, originalException, originalStack, context);
+    }
+}
+/**
+ * Error context included when an event handler throws an exception.
+ */
+export class EventEvaluationErrorContext {
+    constructor(element, componentElement, context, locals, injector) {
+        this.element = element;
+        this.componentElement = componentElement;
+        this.context = context;
+        this.locals = locals;
+        this.injector = injector;
     }
 }

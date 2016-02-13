@@ -1,4 +1,4 @@
-import { DoCheck, ChangeDetectorRef, IterableDiffers, ViewContainerRef, TemplateRef } from 'angular2/core';
+import { DoCheck, ChangeDetectorRef, IterableDiffers, ViewContainerRef, TemplateRef, TrackByFn } from 'angular2/core';
 /**
  * The `NgFor` directive instantiates a template once per item from an iterable. The context for
  * each instantiated template inherits from the outer context with the given loop variable set
@@ -53,10 +53,12 @@ export declare class NgFor implements DoCheck {
     private _templateRef;
     private _iterableDiffers;
     private _cdr;
+    _ngForTrackBy: TrackByFn;
     private _differ;
     constructor(_viewContainer: ViewContainerRef, _templateRef: TemplateRef, _iterableDiffers: IterableDiffers, _cdr: ChangeDetectorRef);
     ngForOf: any;
     ngForTemplate: TemplateRef;
+    ngForTrackBy: TrackByFn;
     ngDoCheck(): void;
     private _applyChanges(changes);
     private _perViewChange(view, record);

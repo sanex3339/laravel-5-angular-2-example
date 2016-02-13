@@ -70,11 +70,11 @@ export let MockDirectiveResolver = class extends DirectiveResolver {
     setViewBindingsOverride(type, viewBindings) {
         this.viewProviderOverrides.set(type, viewBindings);
     }
-    setProvidersOverride(type, bindings) {
-        this._providerOverrides.set(type, bindings);
+    setProvidersOverride(type, providers) {
+        this._providerOverrides.set(type, providers);
     }
-    setViewProvidersOverride(type, viewBindings) {
-        this.viewProviderOverrides.set(type, viewBindings);
+    setViewProvidersOverride(type, viewProviders) {
+        this.viewProviderOverrides.set(type, viewProviders);
     }
 };
 MockDirectiveResolver = __decorate([

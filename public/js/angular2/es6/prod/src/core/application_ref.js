@@ -7,7 +7,6 @@ import { ListWrapper } from 'angular2/src/facade/collection';
 import { TestabilityRegistry, Testability } from 'angular2/src/core/testability/testability';
 import { DynamicComponentLoader } from 'angular2/src/core/linker/dynamic_component_loader';
 import { BaseException, ExceptionHandler, unimplemented } from 'angular2/src/facade/exceptions';
-import { internalView } from 'angular2/src/core/linker/view_ref';
 import { Console } from 'angular2/src/core/console';
 import { wtfLeave, wtfCreateScope } from './profile/profile';
 import { lockMode } from 'angular2/src/facade/lang';
@@ -25,9 +24,10 @@ function _componentProviders(appComponentType) {
                 return dynamicComponentLoader.loadAsRoot(appComponentType, null, injector, () => { appRef._unloadComponent(ref); })
                     .then((componentRef) => {
                     ref = componentRef;
-                    if (isPresent(componentRef.location.nativeElement)) {
+                    var testability = injector.getOptional(Testability);
+                    if (isPresent(testability)) {
                         injector.get(TestabilityRegistry)
-                            .registerApplication(componentRef.location.nativeElement, injector.get(Testability));
+                            .registerApplication(componentRef.location.nativeElement, testability);
                     }
                     return componentRef;
                 });
@@ -130,19 +130,28 @@ export class PlatformRef_ extends PlatformRef {
     get injector() { return this._injector; }
     application(providers) {
         var app = this._initApp(createNgZone(), providers);
+        if (PromiseWrapper.isPromise(app)) {
+            throw new BaseException("Cannot use asyncronous app initializers with application. Use asyncApplication instead.");
+        }
         return app;
     }
     asyncApplication(bindingFn, additionalProviders) {
         var zone = createNgZone();
         var completer = PromiseWrapper.completer();
-        zone.run(() => {
-            PromiseWrapper.then(bindingFn(zone), (providers) => {
-                if (isPresent(additionalProviders)) {
-                    providers = ListWrapper.concat(providers, additionalProviders);
-                }
-                completer.resolve(this._initApp(zone, providers));
+        if (bindingFn === null) {
+            completer.resolve(this._initApp(zone, additionalProviders));
+        }
+        else {
+            zone.run(() => {
+                PromiseWrapper.then(bindingFn(zone), (providers) => {
+                    if (isPresent(additionalProviders)) {
+                        providers = ListWrapper.concat(providers, additionalProviders);
+                    }
+                    let promise = this._initApp(zone, providers);
+                    completer.resolve(promise);
+                });
             });
-        });
+        }
         return completer.promise;
     }
     _initApp(zone, providers) {
@@ -170,8 +179,13 @@ export class PlatformRef_ extends PlatformRef {
         });
         app = new ApplicationRef_(this, zone, injector);
         this._applications.push(app);
-        _runAppInitializers(injector);
-        return app;
+        var promise = _runAppInitializers(injector);
+        if (promise !== null) {
+            return PromiseWrapper.then(promise, (_) => app);
+        }
+        else {
+            return app;
+        }
     }
     dispose() {
         ListWrapper.clone(this._applications).forEach((app) => app.dispose());
@@ -183,8 +197,21 @@ export class PlatformRef_ extends PlatformRef {
 }
 function _runAppInitializers(injector) {
     let inits = injector.getOptional(APP_INITIALIZER);
-    if (isPresent(inits))
-        inits.forEach(init => init());
+    let promises = [];
+    if (isPresent(inits)) {
+        inits.forEach(init => {
+            var retVal = init();
+            if (PromiseWrapper.isPromise(retVal)) {
+                promises.push(retVal);
+            }
+        });
+    }
+    if (promises.length > 0) {
+        return PromiseWrapper.all(promises);
+    }
+    else {
+        return null;
+    }
 }
 /**
  * A reference to an Angular application running on a page.
@@ -276,16 +303,15 @@ export class ApplicationRef_ extends ApplicationRef {
         });
         return completer.promise.then(_ => {
             let c = this._injector.get(Console);
-            let modeDescription = assertionsEnabled() ?
-                "in the development mode. Call enableProdMode() to enable the production mode." :
-                "in the production mode. Call enableDevMode() to enable the development mode.";
-            c.log(`Angular 2 is running ${modeDescription}`);
+            if (assertionsEnabled()) {
+                c.log("Angular 2 is running in the development mode. Call enableProdMode() to enable the production mode.");
+            }
             return _;
         });
     }
     /** @internal */
     _loadComponent(ref) {
-        var appChangeDetector = internalView(ref.hostView).changeDetector;
+        var appChangeDetector = ref.location.internalElement.parentView.changeDetector;
         this._changeDetectorRefs.push(appChangeDetector.ref);
         this.tick();
         this._rootComponents.push(ref);
@@ -296,7 +322,7 @@ export class ApplicationRef_ extends ApplicationRef {
         if (!ListWrapper.contains(this._rootComponents, ref)) {
             return;
         }
-        this.unregisterChangeDetector(internalView(ref.hostView).changeDetector.ref);
+        this.unregisterChangeDetector(ref.location.internalElement.parentView.changeDetector.ref);
         ListWrapper.remove(this._rootComponents, ref);
     }
     get injector() { return this._injector; }
