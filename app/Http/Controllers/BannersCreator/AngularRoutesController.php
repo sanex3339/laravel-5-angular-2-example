@@ -14,7 +14,7 @@ class AngularRoutesController extends Controller
     }
 
     /**
-     * Default route for all Angular 2 routes
+     * Default action for all Angular 2 routes
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */

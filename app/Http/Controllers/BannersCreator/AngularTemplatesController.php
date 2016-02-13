@@ -13,6 +13,13 @@ class AngularTemplatesController extends Controller
         $this->middleware('guest');
     }
 
+    /**
+     * Default action for all Angular 2 templates
+     *
+     * @param $template
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index($template, Request $request)
     {
         $templatePath = 'frontend.' . $template;
