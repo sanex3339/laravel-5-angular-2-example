@@ -32,5 +32,6 @@ php artisan serve
 ## Info
 
 `resources/views/backend` - views for every pages, but NOT for Angular 2 templates
+
 `resources/views/frontend` - views ONLY for Angular 2 templates (Components, Directives)
 
