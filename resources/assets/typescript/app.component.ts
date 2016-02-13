@@ -17,7 +17,7 @@ import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
     }
 ])
 @Component({
-    'directives': [PSDUploader, ROUTER_DIRECTIVES],
+    'directives': [ROUTER_DIRECTIVES],
     'selector': 'banners-creator',
     'template': '<router-outlet></router-outlet>'
 })

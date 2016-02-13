@@ -43,7 +43,7 @@ System.register(['angular2/core', './Components/BannersEditor/BannersEditor', '.
                         }
                     ]),
                     core_1.Component({
-                        'directives': [PSDUploader_1.PSDUploader, router_1.ROUTER_DIRECTIVES],
+                        'directives': [router_1.ROUTER_DIRECTIVES],
                         'selector': 'banners-creator',
                         'template': '<router-outlet></router-outlet>'
                     }), 
