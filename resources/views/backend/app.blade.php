@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Banners Creator</title>
+        <title>Laravel 5 + Angular 2 Example</title>
         <link rel="stylesheet" href="/css/app.css">
         <base href="/"/>
     </head>

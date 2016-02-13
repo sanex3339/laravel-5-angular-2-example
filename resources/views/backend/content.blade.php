@@ -1,9 +1,9 @@
 @extends('backend.layout')
 
 @section('backend.content')
-    <banners-creator>
+    <app>
         @include('backend.loading')
-    </banners-creator>
+    </app>
 
     @include('backend.scripts-import')
 @stop

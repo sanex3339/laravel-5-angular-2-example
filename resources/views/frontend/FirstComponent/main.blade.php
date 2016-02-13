@@ -1,23 +1,22 @@
 <div class="col-md-6 centered">
-    <h2>Выберите PSD макеты для загрузки</h2>
+    <h2>Select files for upload</h2>
     <div class="row bottom-space">
         <form>
             <div class="input-group">
                 <input
-                        accept=".psd"
                         type="file"
-                        id="psdTemplatesUploader"
-                        name="psdTemplates[]"
+                        id="filesUploader"
+                        name="files[]"
                         multiple
                         class="form-control"
-                        (change)="psdTemplateSelectionHandler($event)"
+                        (change)="filesSelectionHandler($event)"
                 >
             <span class="input-group-btn">
                 <button
                         type="submit"
                         class="btn btn-default"
-                        (click)="psdTemplateUploadHandler($event)"
-                >Загрузить</button>
+                        (click)="filesUploadHandler($event)"
+                >Upload</button>
             </span>
             </div>
         </form>
@@ -26,10 +25,10 @@
         <progress-bar *ngIf="progressBarVisibility" [progress]="uploadProgress"></progress-bar>
     </div>
     <div class="row">
-        <h4 *ngIf="psdTemplates.length">Выбранные макеты:</h4>
+        <h4 *ngIf="files.length">Selected files:</h4>
         <ul class="list-group">
-            <li *ngFor="#template of psdTemplates" class="list-group-item">
-                @{{ template.name }}
+            <li *ngFor="#file of files" class="list-group-item">
+                @{{ file.name }}
             </li>
         </ul>
     </div>

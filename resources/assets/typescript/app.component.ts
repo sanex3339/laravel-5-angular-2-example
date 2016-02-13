@@ -1,24 +1,24 @@
 import { Component } from 'angular2/core';
-import { BannersEditor } from './Components/BannersEditor/BannersEditor';
-import { PSDUploader } from './Components/PSDUploader/PSDUploader';
 import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { FirstComponent } from './Components/FirstComponent/FirstComponent';
+import { SecondComponent } from './Components/SecondComponent/SecondComponent';
 
 @RouteConfig([
     {
         path: '/',
         name: 'Root',
-        component: PSDUploader,
+        component: FirstComponent,
         useAsDefault: true
     },
     {
         path: '/edit',
-        name: 'EditTemplates',
-        component: BannersEditor
+        name: 'Edit',
+        component: SecondComponent
     }
 ])
 @Component({
     'directives': [ROUTER_DIRECTIVES],
-    'selector': 'banners-creator',
+    'selector': 'app',
     'template': '<router-outlet></router-outlet>'
 })
 export class AppComponent {

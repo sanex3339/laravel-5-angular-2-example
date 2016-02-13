@@ -11,27 +11,20 @@
 |
 */
 
+// Angular 2 base route resolving
 Route::get('/', [
-    'uses' => 'BannersCreator\AngularRoutesController@index',
+    'uses' => 'ExampleControllers\AngularRoutesController@index',
     'as' => 'home'
 ]);
 
-Route::get('/edit', [
-    'uses' => 'BannersCreator\AngularRoutesController@index',
-    'as' => 'edit'
-]);
-
-Route::post('/api/upload-file', [
-    'middleware' => 'cors',
-    'uses' => 'BannersCreator\UploadController@uploadFile',
-    'as' => 'ApiUploadFile']
-);
+// Angular 2 base `/edit` route resolving
+Route::get('/edit', 'ExampleControllers\AngularRoutesController@index');
 
 // Angular 2 templates route
-Route::get('/templates/{template}', [
-    'uses' => 'BannersCreator\AngularTemplatesController@index',
-    'as' => 'AngularTemplatesRoute'
-]);
+Route::get('/templates/{template}', 'ExampleControllers\AngularTemplatesController@index');
+
+// API route
+Route::post('/api/upload-file', 'ExampleControllers\UploadController@uploadFile');
 
 /*
 |--------------------------------------------------------------------------

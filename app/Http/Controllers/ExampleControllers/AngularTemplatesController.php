@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BannersCreator;
+namespace App\Http\Controllers\ExampleControllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
