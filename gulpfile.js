@@ -1,5 +1,6 @@
+process.env.DISABLE_NOTIFIER = true;
+
 var elixir = require('laravel-elixir'),
-    elixirTypescript = require('elixir-typescript'),
     livereload = require('laravel-elixir-livereload'),
     webpack = require('laravel-elixir-webpack-ex');
 
