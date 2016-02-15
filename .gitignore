@@ -1,9 +1,0 @@
-/vendor
-/node_modules
-/public
-Homestead.yaml
-Homestead.json
-.env
-.gitignore
-.idea
-_ide_helper.php
