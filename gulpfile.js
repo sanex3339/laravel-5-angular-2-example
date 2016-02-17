@@ -44,13 +44,18 @@ elixir(function(mix) {
 
     mix.webpack('app.ts', {
         resolve: {
-            extensions: ['', '.js', '.ts']
+            extensions: ['', '.ts', '.webpack.js', '.web.js', '.js']
         },
         module: {
             loaders: [
-                { test: /\.ts/, loader: 'ts-loader' }
+                {
+                    test: /\.ts/,
+                    loader: 'awesome-typescript-loader',
+                    exclude: /node_modules/
+                }
             ]
         },
+        devtool: 'source-map',
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
                 compress: {
