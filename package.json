@@ -5,7 +5,7 @@
     "gulp": "^3.8.8"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.6",
+    "angular2": "2.0.0-beta.7",
     "bootstrap-less": "^3.0.0",
     "es6-promise": "^3.0.2",
     "es6-shim": "^0.33.3",
@@ -14,10 +14,10 @@
     "laravel-elixir-livereload": "^1.0",
     "laravel-elixir-webpack-ex": "0.0.4",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.0",
+    "rxjs": "5.0.0-beta.2",
     "underscore": "^1.8.3",
     "ts-loader": "0.8.1",
     "webpack": "1.12.13",
-    "zone.js": "0.5.14"
+    "zone.js": "0.5.15"
   }
 }

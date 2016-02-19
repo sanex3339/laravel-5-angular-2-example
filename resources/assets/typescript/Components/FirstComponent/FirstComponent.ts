@@ -3,7 +3,6 @@ import { Router } from 'angular2/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
 
-@Injectable()
 @Component({
     'directives': [ProgressBar],
     'providers': [FileUploadService],
