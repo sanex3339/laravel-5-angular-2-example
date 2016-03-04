@@ -17,17 +17,16 @@ class AngularTemplatesController extends Controller
      * Default action for all Angular 2 templates
      *
      * @param $template
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index($template, Request $request)
+    public function index($template)
     {
         $templatePath = 'frontend.' . $template;
 
-        if (view()->exists($templatePath) && !$request->ajax()) {
-            return view($templatePath);
+        if (!view()->exists($templatePath)) {
+            throw new NotFoundHttpException();
         }
 
-        throw new NotFoundHttpException();
+        return view($templatePath);
     }
 }
