@@ -1,6 +1,5 @@
 import { Component, Inject, Injectable } from 'angular2/core';
 
-@Injectable()
 @Component({
     'selector': 'state-template',
     'templateUrl': '/templates/SecondComponent.main'
