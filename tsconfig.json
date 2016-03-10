@@ -2,15 +2,15 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
-    "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": false,
+    "removeComments": true,
     "noImplicitAny": false
   },
   "exclude": [
     "node_modules",
-    "vendor"
+    "vendor",
+    "resources/assets/typescript/vendor.ts"
   ]
 }
