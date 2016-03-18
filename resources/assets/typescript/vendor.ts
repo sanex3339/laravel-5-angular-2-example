@@ -1,11 +1,9 @@
 /// <reference path="../../../node_modules/angular2/typings/browser.d.ts" />
 
 // Polyfills
-import 'es6-shim';
-import 'es6-promise';
 import 'es7-reflect-metadata/dist/browser';
 
-import 'zone.js/dist/zone-microtask';
+import 'zone.js/dist/zone';
 import 'zone.js/dist/long-stack-trace-zone';
 
 // Angular 2
