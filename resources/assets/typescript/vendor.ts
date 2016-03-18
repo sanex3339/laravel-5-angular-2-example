@@ -1,5 +1,3 @@
-/// <reference path="../../../node_modules/angular2/typings/browser.d.ts" />
-
 // Polyfills
 import 'es7-reflect-metadata/dist/browser';
 
