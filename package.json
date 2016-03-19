@@ -6,11 +6,11 @@
     "typescript": "^1.8.9"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.10",
+    "angular2": "2.0.0-beta.11",
     "awesome-typescript-loader": "0.15.10",
     "bootstrap-less": "^3.0.0",
     "es6-promise": "^3.0.2",
-    "es6-shim": "^0.33.3",
+    "es6-shim": "^0.35.0",
     "es7-reflect-metadata": "1.2.0",
     "jquery": "^2.0.0",
     "laravel-elixir": "^4.0.0",
