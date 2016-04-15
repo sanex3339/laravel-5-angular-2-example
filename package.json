@@ -6,7 +6,7 @@
     "typescript": "^1.8.9"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.14",
+    "angular2": "2.0.0-beta.15",
     "awesome-typescript-loader": "0.15.10",
     "bootstrap-less": "^3.0.0",
     "es6-shim": "^0.35.0",
@@ -20,6 +20,9 @@
     "source-map-loader": "0.1.5",
     "underscore": "^1.8.3",
     "ts-loader": "0.8.1",
+    "typescript-decorate": "^1.0.0",
+    "typescript-param": "^1.0.0",
+    "typescript-metadata": "^1.0.0",
     "webpack": "1.12.13",
     "zone.js": "^0.6.6"
   }

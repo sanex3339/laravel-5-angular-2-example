@@ -60,6 +60,11 @@ elixir(function(mix) {
             ]
         },
         plugins: [
+            new webpack.ProvidePlugin({
+                '__decorate': 'typescript-decorate',
+                '__param': 'typescript-param',
+                '__metadata': 'typescript-metadata'
+            }),
             new webpack.optimize.CommonsChunkPlugin({
                 name: 'vendor',
                 filename: 'vendor.js',
