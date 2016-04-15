@@ -21,6 +21,7 @@
     "underscore": "^1.8.3",
     "ts-loader": "0.8.1",
     "typescript-decorate": "^1.0.0",
+    "typescript-extends": "^1.0.1",
     "typescript-param": "^1.0.0",
     "typescript-metadata": "^1.0.0",
     "webpack": "1.12.13",

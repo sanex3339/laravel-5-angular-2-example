@@ -62,6 +62,7 @@ elixir(function(mix) {
         plugins: [
             new webpack.ProvidePlugin({
                 '__decorate': 'typescript-decorate',
+                '__extends': 'typescript-extends',
                 '__param': 'typescript-param',
                 '__metadata': 'typescript-metadata'
             }),
