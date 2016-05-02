@@ -6,7 +6,7 @@
     "typescript": "^1.8.9"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.15",
+    "angular2": "2.0.0-beta.17",
     "awesome-typescript-loader": "0.15.10",
     "bootstrap-less": "^3.0.0",
     "es6-shim": "^0.35.0",
@@ -16,7 +16,7 @@
     "laravel-elixir-livereload": "^1.0",
     "laravel-elixir-webpack-ex": "0.0.4",
     "reflect-metadata": "0.1.2",
-    "rxjs": "5.0.0-beta.2",
+    "rxjs": "5.0.0-beta.6",
     "source-map-loader": "0.1.5",
     "underscore": "^1.8.3",
     "ts-loader": "0.8.1",
