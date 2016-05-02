@@ -27,7 +27,7 @@
     <div class="row">
         <h4 *ngIf="files.length">Selected files:</h4>
         <ul class="list-group">
-            <li *ngFor="#file of files" class="list-group-item">
+            <li *ngFor="let file of files" class="list-group-item">
                 @{{ file.name }}
             </li>
         </ul>
