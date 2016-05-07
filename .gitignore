@@ -8,7 +8,6 @@
 Homestead.yaml
 Homestead.json
 .env
-/.gitignore
 .idea
 .phpstorm.meta.php
 _ide_helper.php
