@@ -9,13 +9,11 @@
     "removeComments": true,
     "noImplicitAny": false
   },
-  "files": [
-    "resources/assets/typescript/app.ts",
-    "node_modules/angular2/typings/browser.d.ts"
-  ],
   "exclude": [
     "node_modules",
     "vendor",
-    "resources/assets/typescript/vendor.ts"
+    "resources/assets/typescript/vendor.ts",
+    "resources/assets/typescript/typings/main",
+    "resources/assets/typescript/typings/main.d.ts"
   ]
 }

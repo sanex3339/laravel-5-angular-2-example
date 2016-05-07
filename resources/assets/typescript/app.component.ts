@@ -1,25 +1,22 @@
-import { Component } from 'angular2/core';
-import { RouteConfig, ROUTER_DIRECTIVES } from 'angular2/router';
+import { Component } from '@angular/core';
+import { Routes, ROUTER_DIRECTIVES } from '@angular/router';
 import { FirstComponent } from './Components/FirstComponent/FirstComponent';
 import { SecondComponent } from './Components/SecondComponent/SecondComponent';
 
-@RouteConfig([
+@Routes([
     {
         path: '/',
-        name: 'Root',
-        component: FirstComponent,
-        useAsDefault: true
+        component: FirstComponent
     },
     {
         path: '/edit',
-        name: 'Edit',
         component: SecondComponent
     }
 ])
 @Component({
     'directives': [ROUTER_DIRECTIVES],
     'selector': 'app',
-    'template': '<router-outlet></router-outlet>'
+    'template': `<a [routerLink]="['/']"></a><router-outlet></router-outlet>`
 })
 export class AppComponent {
     constructor () {}

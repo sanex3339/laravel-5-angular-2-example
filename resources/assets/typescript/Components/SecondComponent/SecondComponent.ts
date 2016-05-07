@@ -1,4 +1,4 @@
-import { Component, Inject, Injectable } from 'angular2/core';
+import { Component, Inject, Injectable } from '@angular/core';
 
 @Component({
     'selector': 'state-template',

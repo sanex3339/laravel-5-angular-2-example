@@ -3,10 +3,25 @@
   "devDependencies": {
     "del": "^2.2.0",
     "gulp": "^3.8.8",
-    "typescript": "^1.8.9"
+    "typescript": "^1.8.10",
+    "typescript-decorate": "^1.0.0",
+    "typescript-extends": "^1.0.1",
+    "typescript-param": "^1.0.0",
+    "typescript-metadata": "^1.0.0",
+    "typings":"^0.8.1"
+  },
+  "scripts": {
+    "install": "cd resources/assets/typescript && typings install"
   },
   "dependencies": {
-    "angular2": "2.0.0-beta.17",
+    "@angular/common":  "2.0.0-rc.1",
+    "@angular/compiler":  "2.0.0-rc.1",
+    "@angular/core":  "2.0.0-rc.1",
+    "@angular/http":  "2.0.0-rc.1",
+    "@angular/platform-browser":  "2.0.0-rc.1",
+    "@angular/platform-browser-dynamic":  "2.0.0-rc.1",
+    "@angular/router":  "2.0.0-rc.1",
+    "@angular/upgrade":  "2.0.0-rc.1",
     "awesome-typescript-loader": "0.17.0",
     "bootstrap-less": "^3.3.8",
     "es6-shim": "^0.35.0",
@@ -15,15 +30,11 @@
     "laravel-elixir": "^4.0.0",
     "laravel-elixir-livereload": "^1.1.4",
     "laravel-elixir-webpack-ex": "0.0.4",
-    "reflect-metadata": "0.1.2",
+    "reflect-metadata": "0.1.3",
     "rxjs": "5.0.0-beta.6",
     "source-map-loader": "0.1.5",
     "underscore": "^1.8.3",
-    "typescript-decorate": "^1.0.0",
-    "typescript-extends": "^1.0.1",
-    "typescript-param": "^1.0.0",
-    "typescript-metadata": "^1.0.0",
     "webpack": "1.13.0",
-    "zone.js": "^0.6.6"
+    "zone.js": "^0.6.12"
   }
 }

@@ -1,5 +1,5 @@
-import { Component, Inject, Injectable } from 'angular2/core';
-import { Router } from 'angular2/router';
+import { Component, Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
 
@@ -18,7 +18,7 @@ export class FirstComponent {
     /**
      * @type {string}
      */
-    private redirectRoute: string = '/Edit';
+    private redirectRoute: string = '/edit';
 
     /**
      * @type {Array}

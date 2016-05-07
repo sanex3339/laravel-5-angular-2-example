@@ -1,9 +1,9 @@
 import { AppComponent } from './app.component';
-import { ROUTER_PROVIDERS } from "angular2/router";
-import { bootstrap } from 'angular2/platform/browser';
-import { enableProdMode } from "angular2/core";
+import { ROUTER_PROVIDERS } from '@angular/router';
+import { bootstrap }    from '@angular/platform-browser-dynamic';
+import { enableProdMode } from '@angular/core';
 
 //enableProdMode();
-bootstrap(AppComponent, [
+bootstrap(<Function>AppComponent, [
     ROUTER_PROVIDERS
 ]);
