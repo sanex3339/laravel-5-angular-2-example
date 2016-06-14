@@ -1,31 +1,87 @@
 {
-  "name": "bootstrap-less",
-  "version": "3.3.8",
+  "_args": [
+    [
+      "bootstrap-less@^3.3.8",
+      "/home/sanex/PhpstormProjects/laravel-5-angular-2-example"
+    ]
+  ],
+  "_from": "bootstrap-less@>=3.3.8 <4.0.0",
+  "_id": "bootstrap-less@3.3.8",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/bootstrap-less",
+  "_nodeVersion": "0.12.2",
+  "_npmUser": {
+    "email": "aaikevr@gmail.com",
+    "name": "aaike"
+  },
+  "_npmVersion": "2.7.4",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "bootstrap-less",
+    "raw": "bootstrap-less@^3.3.8",
+    "rawSpec": "^3.3.8",
+    "scope": null,
+    "spec": ">=3.3.8 <4.0.0",
+    "type": "range"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz",
+  "_shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
+  "_shrinkwrap": null,
+  "_spec": "bootstrap-less@^3.3.8",
+  "_where": "/home/sanex/PhpstormProjects/laravel-5-angular-2-example",
+  "bugs": {
+    "url": "https://github.com/distros/bootstrap-less/issues"
+  },
+  "dependencies": {},
   "description": "less files for bootstrap",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
+    "tarball": "http://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
+  },
+  "format": "global",
+  "gitHead": "29e45184a4b0b4c4ab6d16e0e6647996d4a7dbeb",
+  "homepage": "https://github.com/distros/bootstrap-less",
+  "jspm": {
+    "dependencies": {
+      "jquery": "github:components/jquery"
+    }
+  },
   "keywords": [
     "bootstrap",
     "less"
   ],
+  "main": "js/bootstrap",
+  "maintainers": [
+    {
+      "email": "aaikevr@gmail.com",
+      "name": "aaike"
+    }
+  ],
+  "name": "bootstrap-less",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/distros/bootstrap-less.git"
   },
-  "bugs": {
-    "url": "https://github.com/distros/bootstrap-less/issues"
-  },
-  "main": "js/bootstrap",
-  "format": "global",
+  "scripts": {},
   "shim": {
-    "js/bootstrap": [
-      "jquery"
-    ],
-    "js/bootstrap.min": [
-      "jquery"
-    ],
     "js/affix": [
       "jquery"
     ],
     "js/alert": [
+      "jquery"
+    ],
+    "js/bootstrap": [
+      "jquery"
+    ],
+    "js/bootstrap.min": [
       "jquery"
     ],
     "js/button": [
@@ -59,34 +115,5 @@
       "jquery"
     ]
   },
-  "jspm": {
-    "dependencies": {
-      "jquery": "github:components/jquery"
-    }
-  },
-  "gitHead": "29e45184a4b0b4c4ab6d16e0e6647996d4a7dbeb",
-  "homepage": "https://github.com/distros/bootstrap-less",
-  "_id": "bootstrap-less@3.3.8",
-  "scripts": {},
-  "_shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
-  "_from": "bootstrap-less@>=3.0.0 <4.0.0",
-  "_npmVersion": "2.7.4",
-  "_nodeVersion": "0.12.2",
-  "_npmUser": {
-    "name": "aaike",
-    "email": "aaikevr@gmail.com"
-  },
-  "maintainers": [
-    {
-      "name": "aaike",
-      "email": "aaikevr@gmail.com"
-    }
-  ],
-  "dist": {
-    "shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
-    "tarball": "http://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz",
-  "readme": "ERROR: No README data found!"
+  "version": "3.3.8"
 }
