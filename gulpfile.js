@@ -80,11 +80,11 @@ elixir(function(mix) {
                 ]
             }),
             /*new webpack.optimize.UglifyJsPlugin({
-                 compress: {
-                    warnings: false
-                 },
-                 minimize: true,
-                 mangle: false
+             compress: {
+             warnings: false
+             },
+             minimize: true,
+             mangle: false
              })*/
         ]
     }, 'public/js', 'resources/assets/typescript');
