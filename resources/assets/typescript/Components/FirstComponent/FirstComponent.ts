@@ -4,10 +4,10 @@ import { FileUploadService } from '../../Services/FileUploadService/FileUploadSe
 import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
 
 @Component({
-    'directives': [ProgressBar],
-    'providers': [FileUploadService],
     'selector': 'state-template',
-    'templateUrl': '/templates/FirstComponent.main'
+    'templateUrl': '/templates/FirstComponent.main',
+    'directives': [ProgressBar],
+    'providers': [FileUploadService]
 })
 export class FirstComponent {
     /**
