@@ -1,5 +1,6 @@
-/vendor
 /node_modules
+/vendor
+/resources/vendor
 /public/css
 /public/js
 /public/fonts

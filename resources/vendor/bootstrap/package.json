@@ -2,7 +2,7 @@
   "_args": [
     [
       "bootstrap-less@^3.3.8",
-      "/home/sanex/PhpstormProjects/laravel-5-angular-2-example"
+      "/home/kachalov/PhpstormProjects/laravel-5-angular-2-example"
     ]
   ],
   "_from": "bootstrap-less@>=3.3.8 <4.0.0",
@@ -32,7 +32,7 @@
   "_shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
   "_shrinkwrap": null,
   "_spec": "bootstrap-less@^3.3.8",
-  "_where": "/home/sanex/PhpstormProjects/laravel-5-angular-2-example",
+  "_where": "/home/kachalov/PhpstormProjects/laravel-5-angular-2-example",
   "bugs": {
     "url": "https://github.com/distros/bootstrap-less/issues"
   },
@@ -42,7 +42,7 @@
   "directories": {},
   "dist": {
     "shasum": "71f29dd5a7fffedfe89f1605bbadfe0a338dae53",
-    "tarball": "http://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
+    "tarball": "https://registry.npmjs.org/bootstrap-less/-/bootstrap-less-3.3.8.tgz"
   },
   "format": "global",
   "gitHead": "29e45184a4b0b4c4ab6d16e0e6647996d4a7dbeb",
