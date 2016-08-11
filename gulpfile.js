@@ -1,11 +1,10 @@
 process.env.DISABLE_NOTIFIER = true;
 
 var elixir = require('laravel-elixir'),
-    path = require('path'),
     webpack = require('webpack');
 
 require('laravel-elixir-livereload');
-require('laravel-elixir-webpack-ex');
+require('laravel-elixir-webpack-official');
 
 /*
  |--------------------------------------------------------------------------
@@ -40,54 +39,59 @@ elixir(function(mix) {
     /**
      * Scripts webpack bundling and copying
      **/
-
-    mix.webpack({
-        vendor: 'vendor.ts',
-        app: 'app.ts'
-    }, {
-        debug: true,
-        devtool: 'source-map',
-        resolve: {
-            extensions: ['', '.ts', '.js']
-        },
-        module: {
-            loaders: [
-                {
-                    test: /\.ts$/,
-                    loader: 'awesome-typescript-loader',
-                    exclude: /node_modules/
-                }
-            ]
-        },
-        plugins: [
-            new webpack.ProvidePlugin({
-                '__decorate': 'typescript-decorate',
-                '__extends': 'typescript-extends',
-                '__param': 'typescript-param',
-                '__metadata': 'typescript-metadata'
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendor',
-                filename: 'vendor.js',
-                minChunks: Infinity
-            }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'app',
-                filename: 'app.js',
-                minChunks: 4,
-                chunks: [
-                    'app'
+    mix.webpack(
+        [],
+        'public/js',
+        'resources/assets/typescript',
+        {
+            entry: {
+                app: './resources/assets/typescript/main.ts',
+                vendor: './resources/assets/typescript/vendor.ts'
+            },
+            debug: true,
+            devtool: 'source-map',
+            resolve: {
+                extensions: ['', '.ts', '.js']
+            },
+            module: {
+                loaders: [
+                    {
+                        test: /\.ts$/,
+                        loader: 'awesome-typescript-loader',
+                        exclude: /node_modules/
+                    }
                 ]
-            }),
-            /*new webpack.optimize.UglifyJsPlugin({
-             compress: {
-             warnings: false
-             },
-             minimize: true,
-             mangle: false
-             })*/
-        ]
-    }, 'public/js', 'resources/assets/typescript');
+            },
+            plugins: [
+                new webpack.ProvidePlugin({
+                    '__decorate': 'typescript-decorate',
+                    '__extends': 'typescript-extends',
+                    '__param': 'typescript-param',
+                    '__metadata': 'typescript-metadata'
+                }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: 'vendor',
+                    filename: 'vendor.js',
+                    minChunks: Infinity
+                }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    name: 'app',
+                    filename: 'app.js',
+                    minChunks: 4,
+                    chunks: [
+                        'app'
+                    ]
+                }),
+                /*new webpack.optimize.UglifyJsPlugin({
+                 compress: {
+                 warnings: false
+                 },
+                 minimize: true,
+                 mangle: false
+                 })*/
+            ]
+        }
+    );
 
     /**
      * LiveReload

@@ -7,13 +7,14 @@
     "experimentalDecorators": true,
     "noEmitHelpers": true,
     "removeComments": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": [
+      "es6-shim"
+    ]
   },
   "exclude": [
     "node_modules",
     "vendor",
-    "resources/assets/typescript/vendor.ts",
-    "resources/assets/typescript/typings/main",
-    "resources/assets/typescript/typings/main.d.ts"
+    "resources/assets/typescript/vendor.ts"
   ]
 }

@@ -1,8 +1,8 @@
-import { provideRouter, RouterConfig } from '@angular/router';
+import { Routes, RouterModule } from '@angular/router';
 import { FirstComponent } from "./Components/FirstComponent/FirstComponent";
 import { SecondComponent } from "./Components/SecondComponent/SecondComponent";
 
-export const routes: RouterConfig = [
+const routes: Routes = [
     {
         path: '',
         component: FirstComponent
@@ -13,6 +13,4 @@ export const routes: RouterConfig = [
     }
 ];
 
-export const ROUTER_PROVIDERS = [
-    provideRouter(routes)
-];
+export const routing = RouterModule.forRoot(routes);
