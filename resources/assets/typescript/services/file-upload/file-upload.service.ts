@@ -13,16 +13,19 @@ export class FileUploadService {
     }
 
     /**
-     * PLACEHOLDER for files uploading
-     *
-     * @returns {Observable<Response>}
+     * @param requestUrl
+     * @returns {Observable<{}>}
      */
-    public upload (): Observable<{}> {
+    public upload (requestUrl: string): Observable<{}> {
         return this.http
-            .post('/api/upload-file', '')
+            .post(requestUrl, '')
             .map(FileUploadService.extractData);
     }
 
+    /**
+     * @param res
+     * @returns {any}
+     */
     private static extractData (res: Response): any {
         let body = res.json();
 

@@ -6,8 +6,12 @@ import { ProgressBar } from '../ui/progress-bar/progress-bar.component';
 @Component({
     'selector': 'state-template',
     'template': require('./first.template.html'),
-    'directives': [ProgressBar],
-    'providers': [FileUploadService]
+    'directives': [
+        ProgressBar
+    ],
+    'providers': [
+        FileUploadService
+    ]
 })
 export class FirstComponent {
     /**
@@ -77,7 +81,7 @@ export class FirstComponent {
 
         // just upload placeholder method
         this.fileUploadService
-            .upload()
+            .upload(this.uploadRoute)
             .subscribe(data => {
                 console.log('Message from server:', data);
                 this.router.navigate([this.redirectRoute]);

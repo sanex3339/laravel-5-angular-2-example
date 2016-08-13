@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 @Component({
     'selector': 'state-template',
-    'template': require('./second.template.html'),
-    'directives': [ROUTER_DIRECTIVES]
+    'template': require('./second.template.html')
 })
 export class SecondComponent {
     constructor () {

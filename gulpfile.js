@@ -86,13 +86,13 @@ elixir(function(mix) {
                         'app'
                     ]
                 }),
-                /*new webpack.optimize.UglifyJsPlugin({
-                 compress: {
-                 warnings: false
-                 },
-                 minimize: true,
-                 mangle: false
-                 })*/
+                new webpack.optimize.UglifyJsPlugin({
+                     compress: {
+                        warnings: false
+                     },
+                     minimize: true,
+                     mangle: false
+                 })
             ]
         }
     );
