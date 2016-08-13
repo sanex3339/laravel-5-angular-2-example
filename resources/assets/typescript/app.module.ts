@@ -7,6 +7,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { routing } from './app.routing';
 
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from "./components/page-not-found/page-not-found.component";
 import { FirstComponent } from "./components/first/first.component";
 import { SecondComponent } from "./components/second/second.component";
 
@@ -19,6 +20,7 @@ import { SecondComponent } from "./components/second/second.component";
     ],
     declarations: [
         AppComponent,
+        PageNotFoundComponent,
         FirstComponent,
         SecondComponent
     ],

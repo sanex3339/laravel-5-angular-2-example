@@ -8,6 +8,9 @@
     "noEmitHelpers": true,
     "removeComments": true,
     "noImplicitAny": false,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
     "types": [
       "es6-shim",
       "node"

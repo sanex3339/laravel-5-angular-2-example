@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Laravel 5 + Angular 2 Example</title>
-        <link rel="stylesheet" href="/css/app.css">
+        <link rel="stylesheet" href="{{ elixir('css/app.css') }}">
         <base href="/"/>
     </head>
     <body>

@@ -97,12 +97,14 @@ elixir(function(mix) {
         }
     );
 
-    /**
-     * LiveReload
-     **/
+    mix.version([
+        'css/app.css',
+        'js/app.js',
+        'js/vendor.js'
+    ]);
+
     mix.livereload([
-        'public/css/**/*',
-        'public/fonts/**/*',
-        'public/js/**/*'
+        'public/build/css/*',
+        'public/build/js/*'
     ]);
 });

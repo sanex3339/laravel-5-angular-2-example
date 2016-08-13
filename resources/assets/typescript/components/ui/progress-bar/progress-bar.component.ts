@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
-    'inputs': ['progress'],
     'selector': 'progress-bar',
     'template': require('./progress-bar.template.html')
 })
@@ -9,5 +8,6 @@ export class ProgressBar {
     /**
      * @type {number}
      */
+    @Input()
     private progress: number = 0;
 }
