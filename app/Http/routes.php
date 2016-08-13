@@ -11,17 +11,10 @@
 |
 */
 
-// Angular 2 base route resolving
-Route::get('/', [
+Route::get('/{any?}', [
     'uses' => 'ExampleControllers\AngularRoutesController@index',
     'as' => 'home'
 ]);
-
-// Angular 2 base `/edit` route resolving
-Route::get('/edit', 'ExampleControllers\AngularRoutesController@index');
-
-// Angular 2 templates route
-Route::get('/templates/{template}', 'ExampleControllers\AngularTemplatesController@index');
 
 // API route
 Route::post('/api/upload-file', 'ExampleControllers\UploadController@uploadFile');

@@ -1,11 +1,11 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { FileUploadService } from '../../Services/FileUploadService/FileUploadService';
-import { ProgressBar } from '../UI/ProgressBar/ProgressBar';
+import { FileUploadService } from '../../services/file-upload/file-upload.service';
+import { ProgressBar } from '../ui/progress-bar/progress-bar.component';
 
 @Component({
     'selector': 'state-template',
-    'templateUrl': '/templates/FirstComponent.main',
+    'template': require('./first.template.html'),
     'directives': [ProgressBar],
     'providers': [FileUploadService]
 })
@@ -38,7 +38,7 @@ export class FirstComponent {
     private uploadProgress: number = 0;
 
     /**
-     * ProgressBar Directive load condition
+     * progress-bar Directive load condition
      *
      * @type {boolean}
      */
@@ -76,13 +76,11 @@ export class FirstComponent {
         this.uploadProgress = 100;
 
         // just upload placeholder method
-        this.fileUploadService.upload().then(
-            () => {
+        this.fileUploadService
+            .upload()
+            .subscribe(data => {
+                console.log('Message from server:', data);
                 this.router.navigate([this.redirectRoute]);
-            },
-            (error) => {
-                document.write(error);
-            }
-        );
+            });
     }
 }

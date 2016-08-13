@@ -3,7 +3,7 @@ import { ROUTER_DIRECTIVES }  from '@angular/router';
 
 @Component({
     'selector': 'state-template',
-    'templateUrl': '/templates/SecondComponent.main',
+    'template': require('./second.template.html'),
     'directives': [ROUTER_DIRECTIVES]
 })
 export class SecondComponent {

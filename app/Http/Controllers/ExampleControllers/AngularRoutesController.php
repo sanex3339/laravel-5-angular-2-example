@@ -20,6 +20,6 @@ class AngularRoutesController extends Controller
      */
     public function index()
     {
-        return view('backend.content');
+        return view('content');
     }
 }

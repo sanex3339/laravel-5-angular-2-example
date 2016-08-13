@@ -32,7 +32,7 @@ php artisan serve
 
 ## Info
 
-`resources/views/backend` - views for every pages, but NOT for Angular 2 templates
-
-`resources/views/frontend` - views ONLY for Angular 2 templates (Components, Directives)
-
+## To include component template to the component use following code:
+```ts
+'template': require('./first.template.html'),
+```

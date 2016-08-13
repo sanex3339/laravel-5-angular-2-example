@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
     'inputs': ['progress'],
     'selector': 'progress-bar',
-    'templateUrl': '/templates/UIComponents.ProgressBar.main'
+    'template': require('./progress-bar.template.html')
 })
 export class ProgressBar {
     /**
