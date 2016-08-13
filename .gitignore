@@ -1,6 +1,7 @@
 /node_modules
 /vendor
 /resources/vendor
+/public/build/**/**
 /public/css
 /public/js
 /public/fonts

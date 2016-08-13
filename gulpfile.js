@@ -93,7 +93,10 @@ elixir(function(mix) {
                      minimize: true,
                      mangle: false
                  })
-            ]
+            ],
+            node: {
+                global: 'window'
+            }
         }
     );
 
