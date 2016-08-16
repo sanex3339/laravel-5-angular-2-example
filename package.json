@@ -6,7 +6,7 @@
     "awesome-typescript-loader": "^2.1.1",
     "del": "^2.2.0",
     "gulp": "^3.9.1",
-    "laravel-elixir": "^6.0.0-9",
+    "laravel-elixir": "^6.0.0-10",
     "laravel-elixir-livereload": "^1.1.6",
     "laravel-elixir-webpack-official": "^1.0.2",
     "raw-loader": "^0.5.1",
@@ -14,8 +14,7 @@
     "typescript-decorate": "^1.0.0",
     "typescript-extends": "^1.0.1",
     "typescript-metadata": "^1.0.0",
-    "typescript-param": "^1.0.0",
-    "webpack": "^2.1.0-beta.20"
+    "typescript-param": "^1.0.0"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.5",
@@ -35,7 +34,6 @@
     "rxjs": "5.0.0-beta.6",
     "source-map-loader": "0.1.5",
     "underscore": "^1.8.3",
-    "webpack": "1.13.1",
     "zone.js": "^0.6.12"
   }
 }

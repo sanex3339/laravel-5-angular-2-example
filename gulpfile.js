@@ -87,12 +87,13 @@ elixir(function(mix) {
                     ]
                 }),
                 new webpack.optimize.UglifyJsPlugin({
-                     compress: {
+                    compress: {
                         warnings: false
-                     },
-                     minimize: true,
-                     mangle: false
-                 })
+                    },
+                    sourceMap: true,
+                    minimize: true,
+                    mangle: false
+                })
             ],
             node: {
                 global: 'window'
