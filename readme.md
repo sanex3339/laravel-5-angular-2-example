@@ -24,6 +24,8 @@ gulp
 gulp watch
 ```
 
+Note: can be some problems with `gulp watch` when command is calling from `Homestead VM`
+
 ## Server
 
 ```
