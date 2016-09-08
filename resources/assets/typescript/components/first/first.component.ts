@@ -1,17 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FileUploadService } from '../../services/file-upload/file-upload.service';
-import { ProgressBar } from '../ui/progress-bar/progress-bar.component';
 
 @Component({
     'selector': 'state-template',
-    'template': require('./first.template.html'),
-    'directives': [
-        ProgressBar
-    ],
-    'providers': [
-        FileUploadService
-    ]
+    'template': require('./first.template.html')
 })
 export class FirstComponent {
     /**

@@ -3,7 +3,7 @@ import { PageNotFoundComponent } from "./components/page-not-found/page-not-foun
 import { FirstComponent } from "./components/first/first.component";
 import { SecondComponent } from "./components/second/second.component";
 
-const routes: Routes = [
+export const routes: Routes = [
     {
         path: '',
         component: FirstComponent
@@ -17,5 +17,3 @@ const routes: Routes = [
         component: PageNotFoundComponent
     }
 ];
-
-export const routing = RouterModule.forRoot(routes);
