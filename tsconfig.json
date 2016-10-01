@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "strictNullChecks": true,
     "types": [
-      "es6-shim",
+      "core-js",
       "node"
     ]
   },
@@ -20,5 +20,7 @@
     "node_modules",
     "vendor",
     "resources/assets/typescript/vendor.ts"
-  ]
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false
 }

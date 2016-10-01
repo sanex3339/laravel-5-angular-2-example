@@ -1,2 +1,2 @@
-<script src="{{ elixir('js/vendor.js') }}"></script>
-<script src="{{ elixir('js/app.js') }}"></script>
+<script src="{{ elixir('vendor.js', '') }}"></script>
+<script src="{{ elixir('main.js', '') }}"></script>

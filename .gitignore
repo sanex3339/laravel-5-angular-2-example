@@ -3,10 +3,12 @@
 /resources/vendor
 /public/build/**/**
 /public/css
+/public/images
 /public/js
 /public/fonts
 /public/uploads
 /public/upload-images
+/public/rev-manifest.json
 Homestead.yaml
 Homestead.json
 .env

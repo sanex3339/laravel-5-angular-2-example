@@ -1,9 +1,9 @@
 // Polyfills
-import 'es7-reflect-metadata/dist/browser';
+import 'core-js/es6';
+import 'core-js/es7/reflect';
 
 // Zone.js
 import 'zone.js/dist/zone';
-import 'zone.js/dist/long-stack-trace-zone';
 
 // Angular 2
 import '@angular/common';

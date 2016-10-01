@@ -73,6 +73,10 @@ elixir(function(mix) {
                     '__param': 'typescript-param',
                     '__metadata': 'typescript-metadata'
                 }),
+                new webpack.ContextReplacementPlugin(
+                    /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
+                    __dirname
+                ),
                 new webpack.optimize.CommonsChunkPlugin({
                     name: 'vendor',
                     filename: 'vendor.js',
@@ -105,10 +109,5 @@ elixir(function(mix) {
         'css/app.css',
         'js/app.js',
         'js/vendor.js'
-    ]);
-
-    mix.livereload([
-        'public/build/css/*',
-        'public/build/js/*'
     ]);
 });
