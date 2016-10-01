@@ -15,16 +15,14 @@ php artisan key:generate
 ## Building
 
 ```
-gulp
+npm run prod
 ```
 
 ## Watching
 
 ```
-gulp watch
+npm run dev
 ```
-
-Note: can be some problems with `gulp watch` when command is calling from `Homestead VM`
 
 ## Server
 

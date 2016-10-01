@@ -8,9 +8,7 @@ const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV === 'production';
 
 let plugins = [
-    new WebpackNotifierPlugin({
-        alwaysNotify: true
-    }),
+    new WebpackNotifierPlugin(),
     new CleanWebpackPlugin([
         'public/js',
         'public/styles',
