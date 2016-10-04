@@ -1,5 +1,4 @@
-# Laravel 5 and Angular 2 example project.
-## Angular2 RC.5
+# Laravel 5.3 and Angular 2 (release) example project.
 
 ## Installation:
 
