@@ -1,4 +1,4 @@
-# Laravel 5.3 and Angular 2 (release) example project.
+# DEPRECATED!!! Laravel 5.3 and Angular 2 (release) example project.
 
 ## Installation:
 
